@@ -19,3 +19,47 @@ h1 {
 .default_title {
   padding: 0.5rem 1rem;
 }
+
+
+
+// Buton Styles
+button {
+  font-size: 1.1rem;
+  padding: 0.25rem 0.75rem;
+  margin: 0.25rem;
+  border-radius: 0.25rem;
+  border: 1px solid #1b1625;
+  background-color: #eeeeee;
+  cursor: pointer;
+}
+
+.button-group {
+
+  margin: 0.25rem;
+
+  button {
+    margin: 0;
+    border-radius: 0;
+    border-right: 0;
+  }
+
+  button:hover {background-color: darken(#eeeeee, 5%);}
+
+  button.inverted {
+    background-color: #1b1625;
+    color: #ffffff;
+  }
+
+  button.inverted:hover {background-color: lighten(#1b1625, 10%);}
+
+  button:first-child {
+    border-top-left-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+  }
+
+  button:last-child {
+    border-right: 1px solid #1b1625;
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+  }
+}

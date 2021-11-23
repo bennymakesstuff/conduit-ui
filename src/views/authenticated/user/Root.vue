@@ -5,7 +5,7 @@
       <h1>User</h1>
     </div>
 
-    <div class="">
+    <div class="button-group">
       <button @click="navigateTo('user_profilesettings')">Settings</button>
       <button @click="navigateTo('user_utilities')">Utilities</button>
     </div>
