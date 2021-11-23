@@ -1,14 +1,18 @@
 <template>
-  <UnauthenticatedRoot msg="Welcome to Your Vue.js App"/>
+  <AuthenticatedRoot/>
 </template>
 
 <script>
 import UnauthenticatedRoot from '@/views/public/Root.vue'
+import AuthenticatedRoot from '@/views/authenticated/Root.vue'
+import { RouterView } from 'vue-router'
 
 export default {
   name: 'App',
   components: {
-    UnauthenticatedRoot
+    UnauthenticatedRoot,
+    AuthenticatedRoot,
+    'router-view':RouterView
   }
 }
 </script>
@@ -19,7 +23,6 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  color: #ffffff;
 }
 </style>

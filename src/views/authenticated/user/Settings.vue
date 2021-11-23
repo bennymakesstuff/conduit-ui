@@ -1,18 +1,17 @@
 <template>
   <div>
-    <h1>Login</h1>
+    <h1>User Settings</h1>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Login',
-  props: {
-    msg: String
-  }
+  name: 'UserSettings',
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+@import '@/assets/theme/main.scss';
+
 </style>

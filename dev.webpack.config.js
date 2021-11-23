@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack')
 const { VueLoaderPlugin } = require('vue-loader');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -26,15 +27,9 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
-          "vue-style-loader",
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-                esModule: false,
-            },
-          },
-          { loader: 'css-loader', options: { esModule: false }},
-          "sass-loader"
+          'vue-style-loader',
+          'css-loader',
+          'sass-loader'
         ]
       },
       // Vanilla Css Loader
@@ -69,6 +64,9 @@ module.exports = {
       filename: 'index.html',
       template: 'src/index.html',
       inject: true
+    }),
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
     }),
     new MiniCssExtractPlugin({
         filename: "[name].css",
