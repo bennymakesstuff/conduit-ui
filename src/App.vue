@@ -13,6 +13,11 @@ export default {
     UnauthenticatedRoot,
     AuthenticatedRoot,
     'router-view':RouterView
+  },
+  mounted(){
+    console.log("Store");
+    console.log(this);
+    console.log("Store");
   }
 }
 </script>

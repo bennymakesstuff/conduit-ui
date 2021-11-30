@@ -2,7 +2,7 @@
   <div>
 
     <div class="default_title">
-      <h1>User</h1>
+      <h1>Welcome {{username}}</h1>
     </div>
 
     <div class="button-group">
@@ -22,6 +22,13 @@ export default {
   name: 'UserRoot',
   components: {
     'router-view': RouterView
+  },
+  data: function() {
+    return {
+      username: this.$store.state.user.username || ''
+    }
+  },
+  mounted() {
   }
 }
 </script>

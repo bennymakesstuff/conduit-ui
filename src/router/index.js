@@ -16,6 +16,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "core" */ '@/views/authenticated/Home.vue')
   },
   {
+    path: "/login",
+    name: "login",
+    component: () => import(/* webpackChunkName: "core" */ '@/views/public/Root.vue')
+  },
+  {
     path: "/user",
     name: "user",
     component: () => import(/* webpackChunkName: "core" */ '@/views/authenticated/user/Root.vue'),
