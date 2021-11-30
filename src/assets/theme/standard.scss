@@ -27,7 +27,7 @@ button {
   padding: 0.25rem 0.75rem;
   margin: 0.25rem;
   border-radius: 0.25rem;
-  border: 1px solid #1b1625;
+  border: 3px solid lighten(#1b1625, 20%);
   background-color: #eeeeee;
   cursor: pointer;
 }
@@ -40,9 +40,15 @@ button {
     margin: 0;
     border-radius: 0;
     border-right: 0;
+    transition: background-color 100ms ease, color 100ms ease;
+    user-select: none;
+    outline: none;
   }
 
-  button:hover {background-color: darken(#eeeeee, 5%);}
+  button:hover {
+      background-color: lighten(#1b1625, 20%);
+      color: #ffffff;
+    }
 
   button.inverted {
     background-color: #1b1625;
@@ -57,7 +63,7 @@ button {
   }
 
   button:last-child {
-    border-right: 1px solid #1b1625;
+    border-right: 3px solid lighten(#1b1625, 20%);
     border-top-right-radius: 0.25rem;
     border-bottom-right-radius: 0.25rem;
   }

@@ -8,11 +8,5 @@ export default createStore({
     user
   },
   state: {
-    username: 'bennybroad',
-    given_name: 'Benjamin',
-    surname: 'Broad',
-    email: 'me@benbroad.com'
   }
 });
-
-//export function install;
