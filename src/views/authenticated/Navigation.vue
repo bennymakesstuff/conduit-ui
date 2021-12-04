@@ -1,18 +1,15 @@
 <template>
-  <div class="public-root">
     <div class="navigation">
-
-      <NavMenuItem @click="navigateTo('home')" title="Home"/>
+      <NavMenuItem @click="navigateTo('dashboard')" link="users" title="Dashboard"/>
       <NavMenuItem @click="navigateTo('user')" link="users" title="User"/>
-
-    </div>
+      <NavMenuItem @click="logout_user" title="Logout"/>
   </div>
 </template>
 
 <script>
 import NavMenuItem from '@/components/NavMenuItem.vue'
 export default {
-  name: 'UnauthenticatedRoot',
+  name: 'AuthenticatedNavigation',
   components: {
     NavMenuItem
   },
@@ -20,18 +17,17 @@ export default {
     msg: String
   },
   methods: {
+
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
 @import '@/assets/theme/main.scss';
 
-.navigation {width: 5rem;
+.navigation {width: 100%;
             text-align: left;
-            max-width: 5rem;
             height: 100vh;
             box-shadow: 0px 2px 20px 2px rgba(0, 0, 0, 0.1);
-            background-color: #2a2338;}
+            background-color: $main_purple;}
 </style>

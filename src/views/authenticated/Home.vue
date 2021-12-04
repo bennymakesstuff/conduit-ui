@@ -1,8 +1,6 @@
 <template>
-  <div>
-    <div class="default_title">
-      <h1>Home</h1>
-    </div>
+  <div class="default_title">
+    <h1>Home</h1>
   </div>
 </template>
 
@@ -12,8 +10,11 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
 @import '@/assets/theme/main.scss';
+
+.default_title > h1 {
+  color: #ffffff;
+}
 
 </style>

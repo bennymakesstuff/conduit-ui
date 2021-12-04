@@ -1,18 +1,39 @@
 <template>
   <div>
-    <h1>Login</h1>
+    <h1>Login to Application</h1>
+    <div>
+      <input type="text" v-model="user.username" placeholder="username" />
+    </div>
+    <div>
+      <input type="text" v-model="user.password" placeholder="password" />
+    </div>
+    <div>
+      <button @click="login">Login</button>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Login',
+  name: 'LoginArea',
+  data: function() {
+    return {
+      user: {
+        username: '',
+        password: ''
+      }
+    }
+  },
   props: {
-    msg: String
+  },
+  methods: {
+    login: function() {
+      this.$store.dispatch('LOGIN_USER', this.user);
+    }
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
+h1 {color: #ffffff;}
 </style>

@@ -23,6 +23,17 @@ module.exports = {
         test: /\.vue$/,
         loader: 'vue-loader'
       },
+      // ES6 Loader
+      {
+      test: /\.m?js$/,
+      exclude: /(node_modules|bower_components)/,
+      use: {
+        loader: 'babel-loader',
+        options: {
+          presets: ['@babel/preset-env']
+          }
+        }
+      },
       // SCSS Loader
       {
         test: /\.scss$/,

@@ -7,11 +7,17 @@
 <script>
 export default {
   name: 'UserUtilities',
+  data: function() {
+    return {
+    }
+  },
+  methods: {
+
+  }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
 @import '@/assets/theme/main.scss';
 
 </style>

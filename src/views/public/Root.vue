@@ -1,20 +1,20 @@
 <template>
   <div class="public-root">
-    <div class="page-left">
-      <Login />
-    </div>
-    <div class="page-right">
-    </div>
+    <Navigation />
+    <RouterView></RouterView>
   </div>
 </template>
 
 <script>
+import { RouterView } from 'vue-router'
 import Login from '@/components/Login.vue'
+import Navigation from '@/views/public/Navigation.vue';
 
 export default {
   name: 'UnauthenticatedRoot',
   components: {
-    Login
+    Login,
+    Navigation
   },
   props: {
     msg: String
@@ -22,8 +22,7 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
 @import '@/assets/theme/main.scss';
 
 .public-root {width: 100vw;}
