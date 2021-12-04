@@ -26,14 +26,17 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/theme/main.scss';
 
+$navigation_width: 7rem;
+
 .auth-root {
   width: 100vw;
   min-height: 100vh;
   text-align: left;
   font-size: 0;
+  background-color: yellow;
 
   .content-pane {
-    width: calc(100vw - 5rem);
+    width: calc(100vw - #{$navigation_width});
     vertical-align: top;
     text-align: left;
     display: inline-block;
@@ -46,7 +49,7 @@ export default {
     vertical-align: top;
     font-size: 1rem;
     display: inline-block;
-    max-width: 5rem;
+    max-width: $navigation_width;
   }
 }
 

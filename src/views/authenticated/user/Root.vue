@@ -2,7 +2,7 @@
   <div>
 
     <div class="default_title">
-      <h1>Welcome {{username}}</h1>
+      <h1>User</h1>
     </div>
 
     <div class="button-group">
@@ -25,7 +25,12 @@ export default {
   },
   data: function() {
     return {
-      username: this.$store.state.user.username || ''
+      default_user: {
+        username: '',
+        given_name: '',
+        surname: '',
+      },
+      user: this.$store.getters.user || this.default_user
     }
   },
   mounted() {

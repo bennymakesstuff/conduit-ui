@@ -1,17 +1,28 @@
-import Vue from 'vue';
+// import { provide } from "vue";
+//
+// export const api = {
+//   install: (app, options) => {
+//     const logout = () => {
+//       console.log("Logout is being called");
+//     };
+//
+//     app.provide("logout", logout);
+//   },
+// };
 
-const server = 'http://localhost:3000/';
+import { provide } from 'vue';
+
+console.log('Read API Plugin');
+
+const default_server = 'http://localhost:3000/';
 
 // The API Vue Plugin Object
 export default {
 
    // This install function gets triggered when Vue.use() is invoked passing in the plugin.
-   install(Vue) {
+      install: (app, options) => {
 
-
-    Vue.prototype.$API = {
-
-      get: async function(url = ''){
+      async function get(url = '', server = default_server) {
         const response = await fetch(server+url, {
           method: 'GET', // *GET, POST, PUT, DELETE, etc.
           mode: 'cors', // no-cors, *cors, same-origin
@@ -26,10 +37,10 @@ export default {
         //  body: JSON.stringify(data) // body data type must match "Content-Type" header
         });
         return response.json(); // parses JSON response into native JavaScript objects
-      },
+      }
 
 
-      post: async function(url = '', data = {}){
+      async function post(url = '', data = {}, server = default_server) {
         const response = await fetch(server+url, {
           method: 'POST', // *GET, POST, PUT, DELETE, etc.
           mode: 'cors', // no-cors, *cors, same-origin
@@ -44,9 +55,8 @@ export default {
           body: JSON.stringify(data) // body data type must match "Content-Type" header
         });
         return response.json(); // parses JSON response into native JavaScript objects
-      },
+      }
 
-
-    }
+      app.provide('api', options);
   }
 };
