@@ -1,6 +1,11 @@
 <template>
   <div>
-    <h1>Login to Application</h1>
+    <h1>
+      <IconBase icon-name="login" icon-color="#ffffff">
+        <IconLogin />
+      </IconBase>
+      Login to Application
+    </h1>
     <div>
       <input type="text" v-model="user.username" placeholder="username" />
     </div>
@@ -14,8 +19,15 @@
 </template>
 
 <script>
+import IconBase from '@/components/icons/IconBase.vue';
+import IconLogin from '@/components/icons/IconLogin.vue';
+
 export default {
   name: 'LoginArea',
+  components: {
+    IconBase,
+    IconLogin
+  },
   data: function() {
     return {
       user: {
