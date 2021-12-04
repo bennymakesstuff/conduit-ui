@@ -2,7 +2,6 @@ import { createApp, h } from 'vue'
 import App from './App.vue'
 import { router } from './router'
 import store from './store'
-import api  from './api'
 
 // Create a Vue instance
 const app  = createApp({
@@ -11,10 +10,9 @@ const app  = createApp({
 
 const DEFAULT_SERVER = 'https://localhost:8080/';
 
-// User Plugins
+// Plugins
 app.use(store);
 app.use(router);
-app.use(api);
 
 // Add custom mixin methods
 app.mixin({
@@ -38,38 +36,47 @@ app.mixin({
       return (this.$store.state.user.username != null);
     },
 
+    /**
+     * API Get Request
+     * @param  {String} [url='']
+     * @param  {String} [server=default_server]
+     * @return {string}
+     */
     get: async function(url = '', server = default_server) {
       const response = await fetch(server+url, {
-        method: 'GET', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors', // no-cors, *cors, same-origin
-        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: 'same-origin', // include, *same-origin, omit
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
         headers: {
           'Content-Type': 'application/json'
-          // 'Content-Type': 'application/x-www-form-urlencoded',
         },
-        redirect: 'follow', // manual, *follow, error
-        referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-      //  body: JSON.stringify(data) // body data type must match "Content-Type" header
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
       });
-      return response.json(); // parses JSON response into native JavaScript objects
+      return response.json();
     },
 
+    /**
+     * API Post Request
+     * @param  {String} [url='']
+     * @param  {String} [server=default_server]
+     * @return {string}
+     */
     post: async function(url = '', data = {}, server = DEFAULT_SERVER) {
       const response = await fetch(server+url, {
-        method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors', // no-cors, *cors, same-origin
-        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: 'same-origin', // include, *same-origin, omit
+        method: 'POST',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
         headers: {
           'Content-Type': 'application/json'
-          // 'Content-Type': 'application/x-www-form-urlencoded',
         },
-        redirect: 'follow', // manual, *follow, error
-        referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-        body: JSON.stringify(data) // body data type must match "Content-Type" header
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+        body: JSON.stringify(data)
       });
-      return response.json(); // parses JSON response into native JavaScript objects
+      return response.json();
     }
 
   }

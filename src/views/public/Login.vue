@@ -1,28 +1,25 @@
 <template>
-  <div class="navigation">
+  <div>
 
-    <button @click="login" class="login">Login</button>
+    <LoginArea />
 
   </div>
 </template>
 
 <script>
+import LoginArea from '@/components/Login.vue';
 export default {
-  name: 'UnauthenticatedNavigation',
+  name: 'LoginPage',
   components: {
+    LoginArea
   },
   props: {
-    msg: String
   },
   methods: {
-    login: function() {
-      this.$store.dispatch('LOGIN_USER');
-    }
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 @import '@/assets/theme/main.scss';
 

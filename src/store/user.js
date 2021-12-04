@@ -22,13 +22,7 @@ export const user = {
 
   // Actions
   actions: {
-    LOGIN_USER ({commit, state}) {
-      let user = {
-        username: 'chelseabroad',
-        given_name: 'Chelsea',
-        surname: 'Broad',
-        email: 'chelsea@benbroad.com'
-      }
+    LOGIN_USER ({commit, state}, user) {
 
       return new Promise((resolve, reject) => {
         commit('login_user', user);

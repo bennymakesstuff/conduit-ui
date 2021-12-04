@@ -1,10 +1,12 @@
 <template>
   <div class="public-root">
     <Navigation />
+    <RouterView></RouterView>
   </div>
 </template>
 
 <script>
+import { RouterView } from 'vue-router'
 import Login from '@/components/Login.vue'
 import Navigation from '@/views/public/Navigation.vue';
 
@@ -20,7 +22,6 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 @import '@/assets/theme/main.scss';
 

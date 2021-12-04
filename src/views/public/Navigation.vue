@@ -16,13 +16,12 @@ export default {
   },
   methods: {
     login: function() {
-      this.$store.dispatch('LOGIN_USER');
+      this.navigateTo('login');
     }
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 @import '@/assets/theme/main.scss';
 

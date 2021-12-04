@@ -2,7 +2,7 @@
   <div>
 
     <div class="default_title">
-      <h1>User</h1>
+      <h1>{{user.username}}</h1>
     </div>
 
     <div class="button-group">
@@ -30,7 +30,7 @@ export default {
         given_name: '',
         surname: '',
       },
-      user: this.$store.getters.user || this.default_user
+      user: this.$store.getters.getUser || default_user
     }
   },
   mounted() {
@@ -38,7 +38,6 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 @import '@/assets/theme/main.scss';
 
