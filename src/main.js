@@ -2,6 +2,7 @@ import { createApp, h } from 'vue'
 import App from './App.vue'
 import { router } from './router'
 import store from './store'
+import axios from 'axios';
 
 // Create a Vue instance
 const app  = createApp({
@@ -13,6 +14,7 @@ const DEFAULT_SERVER = 'https://localhost:8080/';
 // Plugins
 app.use(store);
 app.use(router);
+app.config.globalProperties.axios=axios;
 
 // Add custom mixin methods
 app.mixin({

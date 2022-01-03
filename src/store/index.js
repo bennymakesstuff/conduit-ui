@@ -1,5 +1,5 @@
 import { createStore, install } from 'vuex'
-
+import { $axios } from '@/axios'
 import { unwrapProxy } from '@/helper';
 
 // Import Vuex Modules

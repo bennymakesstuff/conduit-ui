@@ -7,7 +7,7 @@
       Login to Application
     </h1>
     <div>
-      <input type="text" v-model="user.username" placeholder="username" />
+      <input type="text" v-model="user.email" placeholder="email" />
     </div>
     <div>
       <input type="text" v-model="user.password" placeholder="password" />
@@ -31,7 +31,7 @@ export default {
   data: function() {
     return {
       user: {
-        username: '',
+        email: '',
         password: ''
       }
     }
