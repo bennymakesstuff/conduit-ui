@@ -26,6 +26,16 @@ const routes = [
         name: "login",
         component: () => import(/* webpackChunkName: "core" */ '@/views/public/Login.vue')
       },
+      {
+        path: "/register",
+        name: "register",
+        component: () => import(/* webpackChunkName: "core" */ '@/views/public/Register.vue')
+      },
+      {
+        path: "/recover-account",
+        name: "recover_account",
+        component: () => import(/* webpackChunkName: "core" */ '@/views/public/Forgot.vue')
+      },
     ]
   },
   {
