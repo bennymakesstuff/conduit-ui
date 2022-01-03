@@ -1,17 +1,17 @@
 <template>
-  <div class="login-page">
+  <div class="register-page">
 
-    <LoginArea class="login-area p-as-center"/>
+    <RegisterArea class="register-area p-as-center"/>
 
   </div>
 </template>
 
 <script>
-import LoginArea from '@/components/Login.vue';
+import RegisterArea from '@/components/Register.vue';
 export default {
-  name: 'LoginPage',
+  name: 'RegisterPage',
   components: {
-    LoginArea
+    RegisterArea
   },
   props: {
   },
@@ -23,12 +23,12 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/theme/main.scss';
 
-.login-page {
+.register-page {
   display: flex;
   width: 100%;
   height: calc(100vh - 4rem);
 
-  > .login-area {
+  > .register-area {
     flex: 1;
     margin-top: -5rem;
   }

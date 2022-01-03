@@ -14,7 +14,6 @@ import { RouterView } from 'vue-router';
 export default {
   name: 'UserDashboard',
   components: {
-    'router-view': RouterView
   },
   data: function() {
     return {

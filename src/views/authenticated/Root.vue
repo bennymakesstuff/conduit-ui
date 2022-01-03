@@ -8,14 +8,12 @@
 </template>
 
 <script>
-import { RouterView } from 'vue-router';
 import Navigation from '@/views/authenticated/Navigation.vue';
 
 export default {
   name: 'AuthRoot',
   components: {
     Navigation,
-    'router-view' : RouterView
   },
   props: {
     msg: String
@@ -34,6 +32,7 @@ $navigation_width: 7rem;
   text-align: left;
   font-size: 0;
   background-color: yellow;
+  position: relative;
 
   .content-pane {
     width: calc(100vw - #{$navigation_width});
@@ -43,6 +42,7 @@ $navigation_width: 7rem;
     background-color: rgb(238, 238, 238);
     min-height: 100vh;
     font-size: 1rem;
+    z-index: 9;
   }
 
   .navigation-pane {
@@ -50,6 +50,8 @@ $navigation_width: 7rem;
     font-size: 1rem;
     display: inline-block;
     max-width: $navigation_width;
+    box-shadow: 5px 5px 20px 5px #333333;
+    z-index: 10;
   }
 }
 

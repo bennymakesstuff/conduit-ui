@@ -6,7 +6,6 @@
 </template>
 
 <script>
-import { RouterView } from 'vue-router'
 import Login from '@/components/Login.vue'
 import Navigation from '@/views/public/Navigation.vue';
 
@@ -31,6 +30,5 @@ export default {
             padding: 5rem;
             text-align: left;
             max-width: 30rem;
-            height: 100vh;
-            background-color: #221d2d;}
+            height: 100vh;}
 </style>
