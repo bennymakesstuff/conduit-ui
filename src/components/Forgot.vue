@@ -74,10 +74,11 @@ export default {
           detail: 'A password reset link has been sent to this email address if an account exists.',
           styleClass: 'compact-toast'
         });
+        this.loader = false;
         this.navigateTo('login');
       }
       else {
-        this.loader = true;
+        this.loader = false;
         this.$toast.add({
           severity:'error',
           summary: 'Password Reset Failed',
