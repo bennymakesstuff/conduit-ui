@@ -19,6 +19,7 @@ import Password from "primevue/password";
 import Menubar from 'primevue/menubar';
 import ToastService from 'primevue/toastservice';
 import Toast from "primevue/toast";
+import ProgressSpinner from 'primevue/progressspinner';
 
 // Create a Vue instance
 const app  = createApp({
@@ -40,6 +41,7 @@ app.component('Button', Button);
 app.component('router-view', RouterView);
 app.component('Menubar', Menubar);
 app.component('Toast', Toast);
+app.component('ProgressSpinner', ProgressSpinner);
 
 
 // Add custom mixin methods

@@ -3,7 +3,7 @@
 
     <div class="home-area">
 
-      <h1>Home Page</h1>
+      <h1>{{ home_page_title }}</h1>
 
     </div>
 
@@ -16,6 +16,11 @@ export default {
   name: 'HomePage',
   components: {
 
+  },
+  data: function() {
+    return {
+      home_page_title: 'Conduit Template Application'
+    }
   },
   props: {
   },

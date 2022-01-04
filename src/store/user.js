@@ -6,7 +6,8 @@ import axios from "axios";
 export const user = {
   state: {
     application_user: null,
-    credentials: null
+    credentials: null,
+    recovery_email: null,
   },
 
   // Mutations
@@ -18,7 +19,6 @@ export const user = {
      */
     login_user (state, user) {
       state.application_user = user;
-      router.push({name: 'dashboard'});
     },
 
     /**
@@ -42,38 +42,56 @@ export const user = {
       localStorage.removeItem('credentials');
       $http.defaults.headers.common["Authorization"] = null;
       router.push({name: 'home'});
-    }
+    },
+
+    start_recovery_mode (state, email) {
+      state.recovery_email = email;
+    },
+
+    stop_recovery_mode (state) {
+      state.recovery_email = null;
+    },
   },
 
   // Actions
   actions: {
     async LOGIN_USER ({dispatch, commit}, user) {
         console.log('%cAttempting to Login User', "color:green");
+        commit('stop_recovery_mode');
 
         // Function to login user
         try {
           console.log('%cSending request', "color:green");
           let response = await $http.post('http://localhost:8000/api/v1/login', user);
           let data = response.data;
-          console.log(response);
+          console.log(data);
 
           // Check status of login response
           if (data.status === false) {
             console.log('%cCould not login user', "color:red");
             console.log('%cMessage: %c' + data.message, "color:red", "color:black");
-            return false;
+            return { status: false };
           }
 
           // Login the user and set the bearer
           commit('set_bearer', data);
           console.log('Axios_Token:' + $http.defaults.headers.common["Authorization"]);
+
           // Get the user details with the new bearer token
-          dispatch('GET_USER_DETAILS');
+          let user_details = await dispatch('GET_USER_DETAILS');
+
+          if (user_details.status === true) {
+            return { status: true };
+          }
+          else {
+            return { status: false };
+          }
 
         }
         catch (error) {
           console.log('%cCould not login user', "color:red");
           console.log(error);
+          return { status: false };
         }
 
     },
@@ -89,9 +107,6 @@ export const user = {
 
     /**
      * Retrieves the users details and saves them to state
-     * @param commit
-     * @returns {Promise<boolean>}
-     * @constructor
      */
     async GET_USER_DETAILS ({commit}) {
       console.log('%cRetrieving user details', "color:green");
@@ -107,15 +122,17 @@ export const user = {
         if (data.status === false) {
           console.log('%cCould not get user details', "color:red");
           console.log('%cMessage: %c' + data.message, "color:red", "color:black");
-          return false;
+          return { status: false };
         }
 
         // Move to the logged in page
         commit('login_user', data);
+        return { status: true }
       }
       catch (error) {
         console.log('%cCould not get user details', "color:red");
         console.log(error);
+        return { status: false };
       }
 
     },
@@ -124,7 +141,7 @@ export const user = {
     async REGISTER ({dispatch, commit}, user) {
       console.log('%cAttempting to Register a new user', "color:green");
 
-      // Function to login user
+      // Function to register user
       try {
         console.log('%cSending request', "color:green");
         let response = await $http.post('http://localhost:8000/api/v1/register', user);
@@ -145,6 +162,33 @@ export const user = {
         console.log(error);
         return false;
       }
+    },
+
+    async REQUEST_PASSWORD_RESET ({dispatch, commit}, user) {
+      console.log('%cRequesting Password Reset Link', "color:green");
+
+      try {
+        let response = await $http.post('http://localhost:8000/api/v1/recover-account', user);
+        let data = response.data;
+        console.log(response);
+
+        // Check status of login response
+        if (data.status === false) {
+          console.log('%cPassword reset request failed', "color:red");
+          console.log('%cMessage: %c' + data.message, "color:red", "color:black");
+          commit('stop_recovery_mode');
+          return { status: false };
+        }
+
+        commit('start_recovery_mode', user.email);
+        return { status: true };
+      }
+      catch (error) {
+        console.log('%cPassword reset request failed', "color:red");
+        console.log(error);
+        commit('stop_recovery_mode');
+        return { status: false };
+      }
 
     },
   },
@@ -159,6 +203,10 @@ export const user = {
      */
     getUser: state => {
       return state.application_user;
+    },
+
+    getRecoveryEmail: state => {
+      return state.recovery_email;
     }
 
 

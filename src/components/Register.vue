@@ -31,8 +31,14 @@
       </div>
 
       <div class="p-m-2">
+        <span>
+          <Password class="p-mw-20" panelClass="register-password-feedback" :toggleMask=true v-model="user.password" placeholder="Password"/>
+        </span>
+      </div>
+
+      <div class="p-m-2">
         <span class="">
-            <InputText class="p-mw-20" type="text" v-model="user.password" placeholder="Password" />
+            <Password class="p-mw-20" :toggleMask=true :feedback=false v-model="user.password_check" placeholder="Retype Password" />
         </span>
       </div>
 
@@ -40,6 +46,10 @@
         <Button class="p-m-1 p-button-sm" label="Register" @click="register"/>
         <Button class="p-m-1 p-button-text p-button-sm" label="Already have an account" @click="navigateTo('login')"/>
       </div>
+    </div>
+
+    <div id="somewhere">
+
     </div>
   </div>
 </template>
@@ -57,7 +67,8 @@ export default {
         given_name: '',
         surname: '',
         email: '',
-        password: ''
+        password: '',
+        password_check: ''
       }
     }
   },
@@ -65,14 +76,39 @@ export default {
   },
   methods: {
     register: async function() {
+
+
+      if (this.user.password !== this.user.password_check) {
+        this.$toast.add({
+          severity:'warn',
+          summary: 'Password Mismatch',
+          detail: 'The passwords entered do not match',
+          life: 3000,
+          styleClass: 'compact-toast'
+        });
+        return;
+      }
+
       let result = await this.$store.dispatch('REGISTER', this.user);
+
       if (result === true) {
         this.account_created = true;
-        this.$toast.add({severity:'success', summary: 'Account Created', life: 3000});
+        this.$toast.add({
+          severity:'success',
+          summary: 'Account Created',
+          life: 3000,
+          styleClass: 'compact-toast'
+        });
         setTimeout(this.navigateTo('login'), 2000);
       }
       else {
-        this.$toast.add({severity:'error', summary: 'Account could not be created', life: 3000});
+        this.$toast.add({
+          severity:'error',
+          summary: 'Account could not be created',
+          detail: 'User may already exist',
+          life: 3000,
+          styleClass: 'compact-toast'
+        });
       }
     }
   }
@@ -82,4 +118,8 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/theme/main.scss';
 h1 {color: #1586d5;}
+.register-password-feedback {
+  transform: translateY(3rem) !important;
+  margin-top: 3rem !important;
+}
 </style>
