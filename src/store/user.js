@@ -189,7 +189,33 @@ export const user = {
         commit('stop_recovery_mode');
         return { status: false };
       }
+    },
 
+    async RESET_PASSWORD ({dispatch, commit}, user) {
+      console.log('%cResetting Password', "color:green");
+
+      try {
+        let response = await $http.post('http://localhost:8000/api/v1/reset-password', user);
+        let data = response.data;
+        console.log(response);
+
+        // Check status of login response
+        if (data.status === false) {
+          console.log('%cPassword reset failed', "color:red");
+          console.log('%cMessage: %c' + data.message, "color:red", "color:black");
+          commit('stop_recovery_mode');
+          return { status: false };
+        }
+
+        commit('start_recovery_mode', user.email);
+        return { status: true };
+      }
+      catch (error) {
+        console.log('%cPassword reset failed', "color:red");
+        console.log(error);
+        commit('stop_recovery_mode');
+        return { status: false };
+      }
     },
   },
 

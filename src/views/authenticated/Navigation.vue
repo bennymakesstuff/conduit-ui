@@ -1,6 +1,8 @@
 <template>
     <div class="navigation p-shadow-4">
-      <NavMenuItem @click="navigateTo('dashboard')" link="users" title="Dashboard" icon="I"/>
+      <NavMenuItem @click="navigateTo('dashboard')" link="users" title="Dashboard" icon="I">
+        <i class="pi pi-check"></i>
+      </NavMenuItem>
       <NavMenuItem @click="navigateTo('user')" link="users" title="User" icon="I"/>
       <NavMenuItem @click="logout_user" title="Logout" icon="I"/>
       <NavMenuItem @click="toggleWidth" title="W" icon="I"/>

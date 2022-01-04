@@ -36,6 +36,11 @@ const routes = [
         name: "recover_account",
         component: () => import(/* webpackChunkName: "core" */ '@/views/public/Forgot.vue')
       },
+      {
+        path: "/password-reset",
+        name: "password_reset",
+        component: () => import(/* webpackChunkName: "core" */ '@/views/public/PasswordReset.vue')
+      },
     ]
   },
   {

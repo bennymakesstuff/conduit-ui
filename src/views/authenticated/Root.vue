@@ -37,7 +37,7 @@ $navigation_width_compact: 4rem;
   min-height: 100vh;
   text-align: left;
   font-size: 0;
-  background-color: yellow;
+  background-color: rgb(238, 238, 238);
   position: relative;
 
   .content-pane {
@@ -45,7 +45,7 @@ $navigation_width_compact: 4rem;
     vertical-align: top;
     text-align: left;
     display: inline-block;
-    background-color: rgb(238, 238, 238);
+    //background-color: rgb(238, 238, 238);
     min-height: 100vh;
     font-size: 1rem;
     z-index: 9;
@@ -61,7 +61,7 @@ $navigation_width_compact: 4rem;
     display: inline-block;
     width: $navigation_width;
     max-width: $navigation_width;
-    box-shadow: 5px 5px 20px 5px #333333;
+    box-shadow: 5px 5px 20px 5px rgba(0,0,0, 0.05);
     z-index: 10;
   }
 

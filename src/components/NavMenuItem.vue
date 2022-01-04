@@ -1,6 +1,8 @@
 <template>
   <div class="nav-item">
-    <div class="icon">{{ icon }}</div>
+    <div class="icon">
+      <slot></slot>
+    </div>
     <div v-if="!$store.getters.getNavigationSize" class="title">{{ title }}</div>
   </div>
 </template>
@@ -37,7 +39,12 @@ export default {
     vertical-align: middle;
   }
 
-  > .icon {font-size: 1rem; border: 1px solid red; width: 1rem; height: 2rem; margin-right: 0.5rem;}
+  > .icon {font-size: 1rem; width: 1rem; height: 2rem; margin-right: 0.75rem; margin-left: 0.5rem;
+    > i {
+      vertical-align: top;
+      margin-top: 0.4rem;
+    }
+  }
   > .text {}
 }
 
