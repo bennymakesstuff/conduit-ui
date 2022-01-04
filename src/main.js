@@ -17,6 +17,8 @@ import InputText from "primevue/inputtext";
 import Button from 'primevue/button';
 import Password from "primevue/password";
 import Menubar from 'primevue/menubar';
+import ToastService from 'primevue/toastservice';
+import Toast from "primevue/toast";
 
 // Create a Vue instance
 const app  = createApp({
@@ -29,6 +31,7 @@ const DEFAULT_SERVER = 'https://localhost:8080/';
 app.use(store);
 app.use(router);
 app.use(PrimeVue);
+app.use(ToastService);
 app.config.globalProperties.axios=axios;
 
 app.component('InputText', InputText);
@@ -36,6 +39,8 @@ app.component('Password', Password);
 app.component('Button', Button);
 app.component('router-view', RouterView);
 app.component('Menubar', Menubar);
+app.component('Toast', Toast);
+
 
 // Add custom mixin methods
 app.mixin({

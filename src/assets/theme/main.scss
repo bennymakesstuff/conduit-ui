@@ -6,3 +6,11 @@ html, body {
   overflow: hidden;
   position: fixed;
 }
+
+.p-mw-20 {
+  min-width: 20rem !important;
+}
+
+.p-mw-20 > input[type="text"] {
+  min-width: 20rem !important;
+}

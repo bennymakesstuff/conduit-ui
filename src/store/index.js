@@ -10,19 +10,30 @@ export default createStore({
     user
   },
   state: {
-    application_route: '/'
+    application_route: '/',
+    compact_navigation: false,
   },
   mutations: {
+    toggle_navigation_size (state) {
+      state.compact_navigation = !state.compact_navigation
+    },
+
     update_application_route (state, route) {
       state.application_route = route;
     }
   },
   actions: {
+    TOGGLE_NAVIGATION_SIZE ({commit}) {
+      commit('toggle_navigation_size');
+    },
+
     UPDATE_ROUTE ({commit}, route) {
       commit('update_application_route', route);
     }
   },
   getters: {
-
+    getNavigationSize: state => {
+      return state.compact_navigation;
+    }
   }
 });

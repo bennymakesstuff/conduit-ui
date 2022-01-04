@@ -1,17 +1,21 @@
 <template>
-  <div class="register-page">
+  <div class="home-page">
 
-    <RegisterArea class="register-area p-as-center"/>
+    <div class="home-area">
+
+      <h1>Home Page</h1>
+
+    </div>
 
   </div>
 </template>
 
 <script>
-import RegisterArea from '@/components/Register.vue';
+
 export default {
-  name: 'RegisterPage',
+  name: 'HomePage',
   components: {
-    RegisterArea
+
   },
   props: {
   },
@@ -23,12 +27,12 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/theme/main.scss';
 
-.register-page {
+.home-page {
   display: flex;
   width: 100%;
   height: calc(100vh - 4rem);
 
-  > .register-area {
+  > .home-area {
     flex: 1;
     width: auto;
     min-width: 30rem;

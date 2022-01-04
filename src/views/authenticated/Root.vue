@@ -1,7 +1,7 @@
 <template>
   <div class="auth-root">
-    <Navigation class="navigation-pane"/>
-    <div class="content-pane">
+    <Navigation :class="['navigation-pane', compact_navigation_class]"/>
+    <div :class="['content-pane', compact_navigation_class]">
       <router-view></router-view>
     </div>
   </div>
@@ -15,6 +15,11 @@ export default {
   components: {
     Navigation,
   },
+  computed: {
+    compact_navigation_class: function(){
+      return (this.$store.getters.getNavigationSize) ? 'compact' : '';
+    }
+  },
   props: {
     msg: String
   }
@@ -24,7 +29,8 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/theme/main.scss';
 
-$navigation_width: 7rem;
+$navigation_width: 10rem;
+$navigation_width_compact: 4rem;
 
 .auth-root {
   width: 100vw;
@@ -45,13 +51,23 @@ $navigation_width: 7rem;
     z-index: 9;
   }
 
+  .content-pane.compact {
+    width: calc(100vw - #{$navigation_width_compact});
+  }
+
   .navigation-pane {
     vertical-align: top;
     font-size: 1rem;
     display: inline-block;
+    width: $navigation_width;
     max-width: $navigation_width;
     box-shadow: 5px 5px 20px 5px #333333;
     z-index: 10;
+  }
+
+  .navigation-pane.compact {
+    width: $navigation_width_compact;
+    max-width: $navigation_width_compact;
   }
 }
 

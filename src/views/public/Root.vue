@@ -2,16 +2,20 @@
   <div class="public-root">
     <Navigation />
     <RouterView></RouterView>
+
+    <HomePage v-if="$route.name === 'home'"/>
   </div>
 </template>
 
 <script>
 import Login from '@/components/Login.vue'
 import Navigation from '@/views/public/Navigation.vue';
+import HomePage from "@/views/public/Home.vue";
 
 export default {
   name: 'UnauthenticatedRoot',
   components: {
+    HomePage,
     Login,
     Navigation
   },

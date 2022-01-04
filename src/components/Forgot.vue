@@ -1,16 +1,13 @@
 <template>
   <div>
-    <h1>
+    <h1 class="p-m-2">
       {{ title }}
     </h1>
-    <p>
+    <p class="p-m-2">
       {{ subtext }}
     </p>
-    <div class="p-m-2">
-      <span class="p-input-icon-left">
-          <i class="pi pi-user" />
-          <InputText type="text" v-model="user.email" placeholder="Email" />
-      </span>
+    <div class="p-m-6">
+      <InputText class="p-mw-20" type="text" v-model="user.email" placeholder="Email" />
     </div>
     <div>
       <Button class="p-m-1 p-button-sm" label="Need to make an account" @click="navigateTo('register')"/>
@@ -44,5 +41,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/theme/main.scss';
 h1 {color: #1586d5;}
+
 </style>

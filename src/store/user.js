@@ -18,7 +18,7 @@ export const user = {
      */
     login_user (state, user) {
       state.application_user = user;
-      router.push({name: 'user'});
+      router.push({name: 'dashboard'});
     },
 
     /**
@@ -116,6 +116,34 @@ export const user = {
       catch (error) {
         console.log('%cCould not get user details', "color:red");
         console.log(error);
+      }
+
+    },
+
+
+    async REGISTER ({dispatch, commit}, user) {
+      console.log('%cAttempting to Register a new user', "color:green");
+
+      // Function to login user
+      try {
+        console.log('%cSending request', "color:green");
+        let response = await $http.post('http://localhost:8000/api/v1/register', user);
+        let data = response.data;
+        console.log(response);
+
+        // Check status of login response
+        if (data.status === false) {
+          console.log('%cCould not register user', "color:red");
+          console.log('%cMessage: %c' + data.message, "color:red", "color:black");
+          return false;
+        }
+
+        return true;
+      }
+      catch (error) {
+        console.log('%cCould not login user', "color:red");
+        console.log(error);
+        return false;
       }
 
     },

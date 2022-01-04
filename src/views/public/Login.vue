@@ -30,7 +30,13 @@ export default {
 
   > .login-area {
     flex: 1;
-    margin-top: -5rem;
+    width: auto;
+    min-width: 30rem;
+    max-width: 40rem;
+    margin: auto;
+    padding: 2rem;
+    text-align: center;
+    transform: translateY(-2rem);
   }
 }
 
