@@ -6,3 +6,28 @@ html, body {
   overflow: hidden;
   position: fixed;
 }
+
+.p-mw-20 {
+  min-width: 20rem !important;
+}
+
+.p-mw-20 > input[type="text"], .p-mw-20 > input[type="password"] {
+  min-width: 20rem !important;
+}
+
+@keyframes p-progress-spinner-color {
+  100%,
+  0% {
+    stroke: #4d70a6;
+  }
+  40% {
+    stroke: #1e3c6e;
+  }
+  66% {
+    stroke: #4d70a6;
+  }
+  80%,
+  90% {
+    stroke: #6986b6;
+  }
+}

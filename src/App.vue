@@ -1,14 +1,12 @@
 <template>
   <router-view></router-view>
+  <Toast position="bottom-right" />
 </template>
 
 <script>
-import { RouterView } from 'vue-router'
-
 export default {
   name: 'App',
   components: {
-    'router-view':RouterView
   },
   computed: {
   },

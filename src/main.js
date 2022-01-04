@@ -1,7 +1,25 @@
 import { createApp, h } from 'vue'
 import App from './App.vue'
 import { router } from './router'
+import { RouterView } from 'vue-router';
 import store from './store'
+import axios from 'axios';
+import PrimeVue from 'primevue/config';
+
+// Import PrimeView Styles
+import 'primeicons/primeicons.css';
+import 'primevue/resources/themes/lara-light-blue/theme.css';       //theme
+import 'primevue/resources/primevue.min.css';              //core css
+import 'primeflex/primeflex.css';
+
+// Import Components
+import InputText from "primevue/inputtext";
+import Button from 'primevue/button';
+import Password from "primevue/password";
+import Menubar from 'primevue/menubar';
+import ToastService from 'primevue/toastservice';
+import Toast from "primevue/toast";
+import ProgressSpinner from 'primevue/progressspinner';
 
 // Create a Vue instance
 const app  = createApp({
@@ -13,6 +31,18 @@ const DEFAULT_SERVER = 'https://localhost:8080/';
 // Plugins
 app.use(store);
 app.use(router);
+app.use(PrimeVue);
+app.use(ToastService);
+app.config.globalProperties.axios=axios;
+
+app.component('InputText', InputText);
+app.component('Password', Password);
+app.component('Button', Button);
+app.component('router-view', RouterView);
+app.component('Menubar', Menubar);
+app.component('Toast', Toast);
+app.component('ProgressSpinner', ProgressSpinner);
+
 
 // Add custom mixin methods
 app.mixin({

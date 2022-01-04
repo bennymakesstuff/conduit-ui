@@ -1,17 +1,18 @@
 <template>
-  <div class="login-page">
+  <div class="password-reset-page">
 
-    <LoginArea class="login-area p-as-center"/>
+    <PasswordReset class="password-reset-area"/>
 
   </div>
 </template>
 
 <script>
-import LoginArea from '@/components/Login.vue';
+import PasswordReset from '@/components/PasswordReset.vue';
+
 export default {
-  name: 'LoginPage',
+  name: 'PasswordResetPage',
   components: {
-    LoginArea
+    PasswordReset
   },
   props: {
   },
@@ -23,12 +24,12 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/theme/main.scss';
 
-.login-page {
+.password-reset-page {
   display: flex;
   width: 100%;
   height: calc(100vh - 4rem);
 
-  > .login-area {
+  > .password-reset-area {
     flex: 1;
     width: auto;
     min-width: 30rem;

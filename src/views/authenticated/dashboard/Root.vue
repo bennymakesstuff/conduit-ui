@@ -2,23 +2,26 @@
   <div>
 
     <div class="default_title">
-      <h1>Dashboard</h1>
+      <h1>{{ 'Hi, ' + user.firstname }}</h1>
     </div>
 
   </div>
 </template>
 
 <script>
-import { RouterView } from 'vue-router';
 
 export default {
   name: 'UserDashboard',
   components: {
-    'router-view': RouterView
   },
   data: function() {
     return {
-
+      default_user: {
+        username: '',
+        firstname: '',
+        lastname: '',
+      },
+      user: this.$store.getters.getUser || this.default_user,
     }
   },
   mounted() {

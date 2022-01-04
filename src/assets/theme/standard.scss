@@ -1,83 +1,37 @@
 /* Imports */
 @import url('https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-$main_purple: #1b1625;
+$main_purple: #ffffff;
 
 html, body {
-  background-color: #1b1625;
-  font-family: 'Bitter', serif;
-}
-
-#app {
+  //font-family: 'Bitter', serif;
   font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #ffffff;
-  height: 100vh;
+}
+//
+#app {
+//  font-family: Avenir, Helvetica, Arial, sans-serif;
+//  -webkit-font-smoothing: antialiased;
+//  -moz-osx-font-smoothing: grayscale;
+//  text-align: center;
+//  color: #ffffff;
+//  height: 100vh;
   width: 100vw;
-  font-family: 'Bitter', serif;
-}
-
-h1, h2, h3, h4, p {
-  color: #ffffff;
-  font-family: 'Bitter', serif;
-}
-
-h1 {
-  font-weight: 400;
-  color: #1b1625;
+//  font-family: 'Bitter', serif;
 }
 
 .default_title {
   padding: 0.5rem 1rem;
 }
 
+.compact-toast {font-size: 0.5rem !important;
+  background-color: #ffffff !important;
+  margin: 0 !important;
 
-// Buton Styles
-button {
-  font-size: 1.1rem;
-  padding: 0.25rem 0.75rem;
-  margin: 0.25rem;
-  border-radius: 0.25rem;
-  border: 3px solid lighten(#1b1625, 20%);
-  background-color: #eeeeee;
-  cursor: pointer;
+  .p-toast-message-icon {display: none;}
+  .p-toast-summary {font-size: 0.8rem !important;}
+  .p-toast-detail {font-size: 0.7rem !important; color: #7a7a7a !important;}
+  .p-toast-message-text {margin-left: 0 !important;}
+
 }
 
-.button-group {
 
-  margin: 0.25rem;
-
-  button {
-    margin: 0;
-    border-radius: 0;
-    border-right: 0;
-    transition: background-color 100ms ease, color 100ms ease;
-    user-select: none;
-    outline: none;
-  }
-
-  button:hover {
-      background-color: lighten(#1b1625, 20%);
-      color: #ffffff;
-    }
-
-  button.inverted {
-    background-color: #1b1625;
-    color: #ffffff;
-  }
-
-  button.inverted:hover {background-color: lighten(#1b1625, 10%);}
-
-  button:first-child {
-    border-top-left-radius: 0.25rem;
-    border-bottom-left-radius: 0.25rem;
-  }
-
-  button:last-child {
-    border-right: 3px solid lighten(#1b1625, 20%);
-    border-top-right-radius: 0.25rem;
-    border-bottom-right-radius: 0.25rem;
-  }
-}

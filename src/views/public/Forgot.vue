@@ -1,17 +1,17 @@
 <template>
-  <div class="login-page">
+  <div class="forgot-page">
 
-    <LoginArea class="login-area p-as-center"/>
+    <ForgotArea class="forgot-area"/>
 
   </div>
 </template>
 
 <script>
-import LoginArea from '@/components/Login.vue';
+import ForgotArea from '@/components/Forgot.vue';
 export default {
-  name: 'LoginPage',
+  name: 'ForgotPage',
   components: {
-    LoginArea
+    ForgotArea
   },
   props: {
   },
@@ -23,12 +23,12 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/theme/main.scss';
 
-.login-page {
+.forgot-page {
   display: flex;
   width: 100%;
   height: calc(100vh - 4rem);
 
-  > .login-area {
+  > .forgot-area {
     flex: 1;
     width: auto;
     min-width: 30rem;

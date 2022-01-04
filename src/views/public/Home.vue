@@ -1,17 +1,26 @@
 <template>
-  <div class="login-page">
+  <div class="home-page">
 
-    <LoginArea class="login-area p-as-center"/>
+    <div class="home-area">
+
+      <h1>{{ home_page_title }}</h1>
+
+    </div>
 
   </div>
 </template>
 
 <script>
-import LoginArea from '@/components/Login.vue';
+
 export default {
-  name: 'LoginPage',
+  name: 'HomePage',
   components: {
-    LoginArea
+
+  },
+  data: function() {
+    return {
+      home_page_title: 'Conduit Template Application'
+    }
   },
   props: {
   },
@@ -23,12 +32,12 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/theme/main.scss';
 
-.login-page {
+.home-page {
   display: flex;
   width: 100%;
   height: calc(100vh - 4rem);
 
-  > .login-area {
+  > .home-area {
     flex: 1;
     width: auto;
     min-width: 30rem;
