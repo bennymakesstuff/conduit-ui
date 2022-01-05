@@ -2,7 +2,6 @@
   <div class="navigation">
 
     <div class="nav-buttons-group">
-      <Button class="p-button-text p-m-2 p-mt-3 nav-button" label="Test Login" @click="testLogin" />
       <Button class="p-button-text p-m-2 p-mt-3 nav-button" label="Reset" @click="navigateTo('password_reset')" />
       <Button class="p-button-text p-m-2 p-mt-3 nav-button" label="Home" @click="navigateTo('home')" />
       <Button class="p-button-text p-m-2 p-mt-3 nav-button" label="Register" @click="navigateTo('register')" />
@@ -21,9 +20,7 @@ export default {
     msg: String
   },
   methods: {
-    testLogin: function() {
-      this.$store.dispatch('TEST_LOGIN');
-    }
+
   }
 }
 </script>

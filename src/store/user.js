@@ -19,9 +19,6 @@ export const user = {
       state.application_user = user;
     },
 
-    test_login (state) {
-      state.application_user = "benjamin";
-    },
 
     /**
      * Sets the bearer token on local storage and state
@@ -46,10 +43,19 @@ export const user = {
       router.push({name: 'home'});
     },
 
+    /**
+     * Sets an email for persistence between password reset pages and login page
+     * @param state
+     * @param email
+     */
     start_recovery_mode (state, email) {
       state.recovery_email = email;
     },
 
+    /**
+     * Removes email used for persistence between password reset pages and login page
+     * @param state
+     */
     stop_recovery_mode (state) {
       state.recovery_email = null;
     },
@@ -58,10 +64,24 @@ export const user = {
 
   // Actions
   actions: {
+    /**
+     * Sets the users credentials (Token) to storage, state and axios
+     * @param commit
+     * @param credentials
+     * @constructor
+     */
     SET_BEARER_TOKEN ({commit}, credentials) {
       commit('set_bearer', credentials);
     },
 
+    /**
+     * Logs the User in and returns a token
+     * @param dispatch
+     * @param commit
+     * @param user
+     * @returns {Promise<{status: boolean}>}
+     * @constructor
+     */
     async LOGIN_USER ({dispatch, commit}, user) {
         console.log('%cAttempting to Login User', "color:green");
         commit('stop_recovery_mode');
@@ -101,6 +121,7 @@ export const user = {
 
     },
 
+
     /**
      * Logs the user out
      * @param commit
@@ -110,8 +131,12 @@ export const user = {
         commit('logout_user');
     },
 
+
     /**
      * Retrieves the users details and saves them to state
+     * @param commit
+     * @returns {Promise<{status: boolean}>}
+     * @constructor
      */
     async GET_USER_DETAILS ({commit}) {
       console.log('%cRetrieving user details', "color:green");
@@ -140,7 +165,14 @@ export const user = {
 
     },
 
-
+    /**
+     * Registers a new user
+     * @param dispatch
+     * @param commit
+     * @param user
+     * @returns {Promise<boolean>}
+     * @constructor
+     */
     async REGISTER ({dispatch, commit}, user) {
       console.log('%cAttempting to Register a new user', "color:green");
 
@@ -165,6 +197,14 @@ export const user = {
       }
     },
 
+    /**
+     * Requests an Account Recovery password reset email for a logged out user
+     * @param dispatch
+     * @param commit
+     * @param user
+     * @returns {Promise<{status: boolean}>}
+     * @constructor
+     */
     async REQUEST_PASSWORD_RESET ({dispatch, commit}, user) {
       console.log('%cRequesting Password Reset Link', "color:green");
 
@@ -191,6 +231,15 @@ export const user = {
       }
     },
 
+    /**
+     * Resets the users password as part of the account
+     * recovery process with supplied credentials
+     * @param dispatch
+     * @param commit
+     * @param user
+     * @returns {Promise<{status: boolean}>}
+     * @constructor
+     */
     async RESET_PASSWORD ({dispatch, commit}, user) {
       console.log('%cResetting Password', "color:green");
 
@@ -216,33 +265,6 @@ export const user = {
         return { status: false };
       }
     },
-
-
-    async TOKEN_LOGIN ({dispatch, commit}, application_credentials) {
-      try {
-        // Reset the bearer token
-        $http.defaults.headers.common["Authorization"] = "Bearer " + application_credentials['access_token'];
-
-        let response = await $http.post('http://localhost:8000/api/v1/token-login', user);
-        let data = response.data;
-
-        // Check status of login response
-        if (data.status === false) {
-          console.log('%cToken Login Failed', "color:red");
-          // Remove the token from session storage
-          console.log('%cMessage: %c' + data.message, "color:red", "color:black");
-          return { status: false };
-        }
-
-        return { status: true };
-      }
-      catch (error) {
-        console.log('%cToken Login Failed', "color:red");
-        // Remove the token from session storage
-        console.log(error);
-        return { status: false };
-      }
-    }
   },
 
   // Getters
@@ -257,6 +279,12 @@ export const user = {
       return state.application_user;
     },
 
+    /**
+     * Returns the users recovery email address
+     * (Used for persistence of address across login and account recovery pages)
+     * @param state
+     * @returns {null}
+     */
     getRecoveryEmail: state => {
       return state.recovery_email;
     }
