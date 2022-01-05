@@ -3,7 +3,7 @@ import App from './App.vue'
 import { router } from './router'
 import { RouterView } from 'vue-router';
 import store from './store'
-import axios from 'axios';
+import axios, {$axios as $http} from 'axios';
 import PrimeVue from 'primevue/config';
 
 // Import PrimeView Styles
@@ -21,18 +21,21 @@ import ToastService from 'primevue/toastservice';
 import Toast from "primevue/toast";
 import ProgressSpinner from 'primevue/progressspinner';
 
+
+// Application Settings
+const ROUTE_REHYDRATION = true; // Turn this off for production
+const DEFAULT_SERVER = 'https://localhost:8080/';
+
 // Create a Vue instance
 const app  = createApp({
     render: ()=>h(App)
 });
 
-const DEFAULT_SERVER = 'https://localhost:8080/';
-
-// Plugins
-app.use(store);
-app.use(router);
-app.use(PrimeVue);
-app.use(ToastService);
+// Activate Plugins
+let plugins = [
+  store, router, PrimeVue, ToastService
+]
+plugins.forEach((x) => app.use(x));
 app.config.globalProperties.axios=axios;
 
 app.component('InputText', InputText);
@@ -114,3 +117,11 @@ app.mixin({
 
 // Mount the application to the DOM
 app.mount('#app')
+
+// Rehydrate the route from session storage if turned on. Used on local development
+if (ROUTE_REHYDRATION === true) {
+  let application_route = JSON.parse(sessionStorage.getItem('application_route'));
+  if (application_route !== null) {
+    router.push({path: application_route.fullPath});
+  }
+}

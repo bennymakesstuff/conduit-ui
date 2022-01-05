@@ -1,7 +1,5 @@
 import { router } from '@/router';
 import { $axios as $http } from '@/axios'
-import { unwrapProxy } from '@/helper';
-import axios from "axios";
 
 export const user = {
   state: {
@@ -21,6 +19,10 @@ export const user = {
       state.application_user = user;
     },
 
+    test_login (state) {
+      state.application_user = "benjamin";
+    },
+
     /**
      * Sets the bearer token on local storage and state
      * @param state
@@ -28,9 +30,8 @@ export const user = {
      */
     set_bearer (state, data) {
       state.credentials = data;
-      localStorage.setItem('credentials', data);
+      localStorage.setItem('credentials', JSON.stringify(data));
       $http.defaults.headers.common["Authorization"] = "Bearer " + data['access_token'];
-      console.log(data['access_token']);
     },
 
     /**
@@ -39,6 +40,7 @@ export const user = {
      */
     logout_user (state) {
       state.application_user = null;
+      state.credentials = null;
       localStorage.removeItem('credentials');
       $http.defaults.headers.common["Authorization"] = null;
       router.push({name: 'home'});
@@ -51,20 +53,23 @@ export const user = {
     stop_recovery_mode (state) {
       state.recovery_email = null;
     },
+
   },
 
   // Actions
   actions: {
+    SET_BEARER_TOKEN ({commit}, credentials) {
+      commit('set_bearer', credentials);
+    },
+
     async LOGIN_USER ({dispatch, commit}, user) {
         console.log('%cAttempting to Login User', "color:green");
         commit('stop_recovery_mode');
 
         // Function to login user
         try {
-          console.log('%cSending request', "color:green");
           let response = await $http.post('http://localhost:8000/api/v1/login', user);
           let data = response.data;
-          console.log(data);
 
           // Check status of login response
           if (data.status === false) {
@@ -113,10 +118,8 @@ export const user = {
 
       // Function to get users details
       try {
-        console.log('%cSending request', "color:green");
         let response = await $http.get('http://localhost:8000/api/v1/user/details', user);
         let data = response.data;
-        console.log(response);
 
         // Check status of login response
         if (data.status === false) {
@@ -143,10 +146,8 @@ export const user = {
 
       // Function to register user
       try {
-        console.log('%cSending request', "color:green");
         let response = await $http.post('http://localhost:8000/api/v1/register', user);
         let data = response.data;
-        console.log(response);
 
         // Check status of login response
         if (data.status === false) {
@@ -170,7 +171,6 @@ export const user = {
       try {
         let response = await $http.post('http://localhost:8000/api/v1/recover-account', user);
         let data = response.data;
-        console.log(response);
 
         // Check status of login response
         if (data.status === false) {
@@ -197,7 +197,6 @@ export const user = {
       try {
         let response = await $http.post('http://localhost:8000/api/v1/reset-password', user);
         let data = response.data;
-        console.log(response);
 
         // Check status of login response
         if (data.status === false) {
@@ -217,6 +216,33 @@ export const user = {
         return { status: false };
       }
     },
+
+
+    async TOKEN_LOGIN ({dispatch, commit}, application_credentials) {
+      try {
+        // Reset the bearer token
+        $http.defaults.headers.common["Authorization"] = "Bearer " + application_credentials['access_token'];
+
+        let response = await $http.post('http://localhost:8000/api/v1/token-login', user);
+        let data = response.data;
+
+        // Check status of login response
+        if (data.status === false) {
+          console.log('%cToken Login Failed', "color:red");
+          // Remove the token from session storage
+          console.log('%cMessage: %c' + data.message, "color:red", "color:black");
+          return { status: false };
+        }
+
+        return { status: true };
+      }
+      catch (error) {
+        console.log('%cToken Login Failed', "color:red");
+        // Remove the token from session storage
+        console.log(error);
+        return { status: false };
+      }
+    }
   },
 
   // Getters

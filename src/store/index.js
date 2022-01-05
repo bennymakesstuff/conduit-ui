@@ -10,7 +10,7 @@ export default createStore({
     user
   },
   state: {
-    application_route: '/',
+    application_route: null,
     compact_navigation: false,
   },
   mutations: {
@@ -20,6 +20,7 @@ export default createStore({
 
     update_application_route (state, route) {
       state.application_route = route;
+      sessionStorage.setItem('application_route', JSON.stringify(route));
     }
   },
   actions: {

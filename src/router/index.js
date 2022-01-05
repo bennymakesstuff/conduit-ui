@@ -6,10 +6,14 @@ import { unwrapProxy } from '@/helper';
 // Import Route Files
 import { user_routes } from './user_routes.js';
 import store from '@/store';
+import {$axios as $http} from "@/axios";
 
 const UNAUTHENTICATED_REDIRECT_PATH = '/';
 const AUTHENTICATED_REDIRECT_PATH = '/account';
 const ERROR_COLOR = 'red';
+
+
+
 
 /**
  * Application level routing
@@ -46,6 +50,10 @@ const routes = [
   {
     path: "/account",
     name: "account",
+    meta: {
+      color: 'green',
+      requiresAuth: true,
+    },
     component: () => import(/* webpackChunkName: "core" */ '@/views/authenticated/Root.vue'),
     children: [
       {
@@ -77,6 +85,27 @@ export const router = createRouter({
   history: createWebHistory(),
   routes
 });
+
+
+// Check if a user exists
+async function checkUserState() {
+  if (store.getters.getUser === null) {
+    let user_credentials = JSON.parse(localStorage.getItem('credentials'));
+    if (user_credentials !== null) {
+
+      // Set axios bearer token and request user details
+      await store.dispatch('SET_BEARER_TOKEN', user_credentials);
+      let user_result = await store.dispatch('GET_USER_DETAILS', user_credentials['access_token']);
+
+      // If details return true, set bearer
+      if (user_result.status === true) {
+        router.push({name: 'dashboard'});
+      }
+    }
+  }
+}
+
+checkUserState();
 
 /**
  * Adds before route change routing to application
@@ -124,7 +153,7 @@ router.beforeEach((to, from, next) => {
 
 router.afterEach((to, from, failure) => {
   // Update the route in the store for rehydration
-  store.dispatch('UPDATE_ROUTE', to.name);
+  store.dispatch('UPDATE_ROUTE', to);
 });
 
 /**
