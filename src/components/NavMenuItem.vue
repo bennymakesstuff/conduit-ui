@@ -30,8 +30,11 @@ export default {
   height: 3.5rem;
   line-height: 3.5rem;
   text-align: center;
-  border-bottom: 1px solid #373144;
+  border-bottom: 1px solid #eeeeee;
   cursor: pointer;
+  color: rgb(21, 96, 173);
+  font-weight: 500;
+  font-size: 0.9rem;
   margin: 0;
 
   > div {

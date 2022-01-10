@@ -2,7 +2,9 @@
   <div class="auth-root">
     <Navigation :class="['navigation-pane', compact_navigation_class]"/>
     <div :class="['content-pane', compact_navigation_class]">
-      <router-view></router-view>
+      <div class="inner-content-pane">
+        <router-view></router-view>
+      </div>
     </div>
   </div>
 </template>
@@ -37,7 +39,7 @@ $navigation_width_compact: 4rem;
   min-height: 100vh;
   text-align: left;
   font-size: 0;
-  background-color: rgb(238, 238, 238);
+  background-color: #ffffff;
   position: relative;
 
   .content-pane {
@@ -45,10 +47,23 @@ $navigation_width_compact: 4rem;
     vertical-align: top;
     text-align: left;
     display: inline-block;
-    //background-color: rgb(238, 238, 238);
     min-height: 100vh;
     font-size: 1rem;
     z-index: 9;
+    height: 100vh;
+    position: relative;
+    background-color: #ffffff;
+
+    > .inner-content-pane {
+      height: calc(100vh - 1rem);
+      overflow: scroll;
+      border-radius: 1rem;
+      width: calc(100% - 0.5rem);
+      background-color: $inner_content_pane_color;
+      margin-top: 0.5rem;
+      box-shadow: inset 1px 1px 5px #c7c7c7;
+      border: 1px solid #d9d9d9;
+    }
   }
 
   .content-pane.compact {

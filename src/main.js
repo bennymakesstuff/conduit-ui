@@ -20,7 +20,13 @@ import Menubar from 'primevue/menubar';
 import ToastService from 'primevue/toastservice';
 import Toast from "primevue/toast";
 import ProgressSpinner from 'primevue/progressspinner';
-
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import InputSwitch from 'primevue/inputswitch';
+import Dialog from 'primevue/dialog';
+import OverlayPanel from 'primevue/overlaypanel';
+import Tooltip from 'primevue/tooltip';
+import Divider from 'primevue/divider';
 
 // Application Settings
 const ROUTE_REHYDRATION = true; // Turn this off for production
@@ -45,6 +51,14 @@ app.component('router-view', RouterView);
 app.component('Menubar', Menubar);
 app.component('Toast', Toast);
 app.component('ProgressSpinner', ProgressSpinner);
+app.component('DataTable', DataTable);
+app.component('Column', Column);
+app.component('InputSwitch', InputSwitch);
+app.component('Dialog', Dialog);
+app.component('OverlayPanel', OverlayPanel);
+app.component('Divider', Divider);
+
+app.directive('tooltip', Tooltip);
 
 
 // Add custom mixin methods

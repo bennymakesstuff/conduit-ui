@@ -5,8 +5,10 @@ import { unwrapProxy } from '@/helper';
 
 // Import Route Files
 import { user_routes } from './user_routes.js';
+import { role_routes } from './role_routes.js';
 import store from '@/store';
 import {$axios as $http} from "@/axios";
+import {permission_routes} from "@/router/permission_routes";
 
 const UNAUTHENTICATED_REDIRECT_PATH = '/';
 const AUTHENTICATED_REDIRECT_PATH = '/account';
@@ -65,6 +67,26 @@ const routes = [
         requiresAuth: true,
       },
       children: user_routes
+    },
+    {
+      path: "/roles",
+      name: "roles",
+      component: () => import(/* webpackChunkName: "core" */ '@/views/authenticated/roles/Root.vue'),
+      meta: {
+        color: 'green',
+        requiresAuth: true,
+      },
+      children: role_routes
+    },
+    {
+      path: "/permissions",
+      name: "permissions",
+      component: () => import(/* webpackChunkName: "core" */ '@/views/authenticated/permissions/Root.vue'),
+      meta: {
+        color: 'green',
+        requiresAuth: true,
+      },
+      children: permission_routes
     },
     {
       path: "/dashboard",

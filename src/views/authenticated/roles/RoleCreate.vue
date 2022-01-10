@@ -1,0 +1,204 @@
+<template>
+  <div style="min-width: 30rem;">
+
+    <!--<div v-if="$route.name===routeName" class="">-->
+    <div class="">
+      <div class="route-header">
+        <div class="details">
+          <h1 class="route-title">{{ pageTitle }}</h1>
+          <p class="route-description">{{ route.description }}</p>
+        </div>
+        <div class="center"></div>
+        <div class="controls">
+          <Button label="Save" class="button-set p-m-1 p-button-sm"/>
+          <Button label="Cancel" class="button-set p-m-1 p-button-sm" @click="close"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="general-info p-m-2">
+      <div class="left">
+        <InputText class="p-m-1 p-col-12" v-model="new_role.identifier" placeholder="Identifier" />
+        <InputText class="p-m-1 p-col-12" v-model="new_role.title" placeholder="Title" />
+        <InputText class="p-m-1 p-col-12" v-model="new_role.description" placeholder="Description" />
+      </div>
+      <div class="right">
+        <InputText class="p-m-1 p-col-12" v-model="new_role.group" placeholder="Role Group" />
+
+      </div>
+    </div>
+
+
+    <Divider align="left">
+      <div class="p-d-inline-flex p-ai-center">
+        <i class="pi pi-user p-mr-2"></i>
+        <b>Permissions</b>
+      </div>
+    </Divider>
+
+
+    <!-- TABLES FOR PERMISSIONS -->
+    <div>
+        <DataTable  class="p-datatable-sm permission-table"
+                    v-for="group in permissions_groups"
+                    :key="group.group_id"
+                   :value="group.permissions"
+                   showGridlines
+                   responsiveLayout="scroll">
+          <template #header>
+            <h3 style="margin-top: 0;margin-bottom: 0.25rem;">{{ group.title }}</h3>
+            {{ group.description }}
+          </template>
+          <Column field="active" header="Active" style="width: 1rem;text-align:center;">
+            <template #body="slotProps">
+              <InputSwitch v-model="slotProps.data.active" class="record-toggle"/>
+            </template>
+          </Column>
+          <Column field="identifier" header="Identifier"></Column>
+          <Column field="title" header="Role"></Column>
+          <Column field="description" header="Description"></Column>
+          <template #footer></template>
+        </DataTable>
+
+    </div>
+
+  </div>
+</template>
+
+<script>
+import {FilterMatchMode,FilterOperator} from 'primevue/api';
+
+export default {
+  name: 'UserSettings',
+  data: function() {
+    return {
+      route: {
+        name: 'role-create',
+        createName: 'role-create',
+        editName: 'role-edit',
+        title: '',
+        description: 'Create a new role',
+      },
+      new_role: {
+        identifier: '',
+        title: '',
+        description: '',
+        group: ''
+      },
+      permissions_groups: [
+        {
+          "group_id": 0,
+          "title": "User Management",
+          "description": "Permissions for managing users",
+          "permissions": [
+            {
+              "id": 0,
+              "active": true,
+              "identifier": 'users:create',
+              "title": 'Create Users',
+              "description": 'Can create new users in the system'
+            },
+            {
+              "id": 2,
+              "active": true,
+              "identifier": 'users:delete',
+              "title": 'Delete Users',
+              "description": 'Can delete users from the system'
+            }
+          ]
+        },
+        {
+          "group_id": 0,
+          "title": "Role Management",
+          "description": "Manage roles within the system",
+          "permissions": [
+            {
+              "id": 0,
+              "active": true,
+              "identifier": 'role:create',
+              "title": 'Permission Title',
+              "description": 'This is a permission'
+            },
+            {
+              "id": 2,
+              "active": true,
+              "identifier": 'role:delete',
+              "title": 'Second Permission Title',
+              "description": 'This is another permission'
+            }
+          ]
+        },
+
+        {
+          "group_id": 0,
+          "title": "Role Management",
+          "description": "Manage roles within the system",
+          "permissions": [
+        {
+          "id": 0,
+          "active": true,
+          "identifier": 'role:create',
+          "title": 'Permission Title',
+          "description": 'This is a permission'
+        },
+        {
+          "id": 2,
+          "active": true,
+          "identifier": 'role:delete',
+          "title": 'Second Permission Title',
+          "description": 'This is another permission'
+        }
+      ]
+    }
+
+      ]
+    }
+  },
+  computed: {
+    pageTitle: function() {
+      if (this.$route.name === this.route.createName) {
+        return 'New Role';
+      }
+      if (this.$route.name === this.route.editName) {
+        return 'Edit Role'
+      }
+      return 'Issue Found'
+    }
+  },
+  methods: {
+    close: function() {
+      this.navigateTo('roles');
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@/assets/theme/main.scss';
+
+.button-set {
+  display: inline-block;
+}
+
+.permission-table {
+  margin-bottom: 2rem;
+}
+
+.general-info {
+  display: flex;
+  margin: 0;
+
+  > div {
+    flex: 1;
+    padding: 1rem;
+  }
+
+  > div:first-child {
+    padding-left: 0;
+  }
+
+  > div:last-child {
+    padding-right: 0;
+  }
+}
+</style>
