@@ -10,7 +10,7 @@
         </div>
         <div class="center"></div>
         <div class="controls">
-          <Button label="Save" class="button-set p-m-1 p-button-sm"/>
+          <Button label="Save" class="button-set p-m-1 p-button-sm" @click="saveRole"/>
           <Button label="Cancel" class="button-set p-m-1 p-button-sm" @click="close"/>
         </div>
       </div>
@@ -18,12 +18,12 @@
 
     <div class="general-info p-m-2">
       <div class="left">
-        <InputText class="p-m-1 p-col-12" v-model="new_role.identifier" placeholder="Identifier" />
-        <InputText class="p-m-1 p-col-12" v-model="new_role.title" placeholder="Title" />
-        <InputText class="p-m-1 p-col-12" v-model="new_role.description" placeholder="Description" />
+        <InputText class="p-m-1 p-col-12 p-inputtext-sm" v-model="new_role.identifier" placeholder="Identifier" />
+        <InputText class="p-m-1 p-col-12 p-inputtext-sm" v-model="new_role.title" placeholder="Title" />
+        <InputText class="p-m-1 p-col-12 p-inputtext-sm" v-model="new_role.description" placeholder="Description" />
       </div>
       <div class="right">
-        <InputText class="p-m-1 p-col-12" v-model="new_role.group" placeholder="Role Group" />
+        <InputText class="p-m-1 p-col-12 p-inputtext-sm" v-model="new_role.group" placeholder="Role Group" />
 
       </div>
     </div>
@@ -67,6 +67,7 @@
 
 <script>
 import {FilterMatchMode,FilterOperator} from 'primevue/api';
+import {$axios as $http} from "@/axios";
 
 export default {
   name: 'UserSettings',
@@ -83,7 +84,8 @@ export default {
         identifier: '',
         title: '',
         description: '',
-        group: ''
+        group: '',
+        permissions: []
       },
       permissions_groups: [
         {
@@ -166,6 +168,24 @@ export default {
     }
   },
   methods: {
+    saveRole: async function() {
+      try {
+        let response = await $http.post('http://localhost:8000/api/v1/roles/create', {'new_user': this.new_role});
+        let data = response.data;
+
+        // Send request to create new role
+        if (data.status === false) {
+          console.log('%cCould not create new role', "color:red");
+          console.log('%cMessage: %c' + data.message, "color:red", "color:black");
+        }
+
+        this.roles = data.roles;
+      }
+      catch (error) {
+        console.log('%cCould not create new role', "color:red");
+        console.log(error);
+      }
+    },
     close: function() {
       this.navigateTo('roles');
     }

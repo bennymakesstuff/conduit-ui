@@ -1,9 +1,9 @@
 <template>
   <div class="nav-item">
-    <div class="icon">
+    <div :class="[{'narrow-menu': $store.getters.getNavigationSize},'icon']">
       <slot></slot>
     </div>
-    <div v-if="!$store.getters.getNavigationSize" class="title">{{ title }}</div>
+    <div v-show="!$store.getters.getNavigationSize" class="title">{{ title }}</div>
   </div>
 </template>
 
@@ -36,19 +36,34 @@ export default {
   font-weight: 500;
   font-size: 0.9rem;
   margin: 0;
+  text-align: left;
 
   > div {
     display: inline-block;
     vertical-align: middle;
   }
 
-  > .icon {font-size: 1rem; width: 1rem; height: 2rem; margin-right: 0.75rem; margin-left: 0.5rem;
+  > .icon.narrow-menu {
+    margin-left: 1rem;
+  }
+
+  > .icon {font-size: 1rem;
+          width: 2rem;
+          height: 2rem;
+          margin-right: 0.75rem;
+          margin-left: 0.5rem;
+          line-height: 2rem;
+          text-align: center;
+          transition: margin-left 100ms ease;
+
     > i {
       vertical-align: top;
       margin-top: 0.4rem;
     }
   }
-  > .text {}
+  > .text {
+    transition: display 100ms ease;
+  }
 }
 
 .nav-item:hover {background-color: rgba(0,0,0,0.05);}

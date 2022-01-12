@@ -6,6 +6,7 @@ import { unwrapProxy } from '@/helper';
 // Import Route Files
 import { user_routes } from './user_routes.js';
 import { role_routes } from './role_routes.js';
+import { app_settings_routes } from './app_settings_routes.js';
 import store from '@/store';
 import {$axios as $http} from "@/axios";
 import {permission_routes} from "@/router/permission_routes";
@@ -67,6 +68,16 @@ const routes = [
         requiresAuth: true,
       },
       children: user_routes
+    },
+    {
+      path: "/app-settings",
+      name: "app_settings",
+      component: () => import(/* webpackChunkName: "core" */ '@/views/authenticated/settings/application_settings/Root.vue'),
+      meta: {
+        color: 'green',
+        requiresAuth: true,
+      },
+      children: app_settings_routes
     },
     {
       path: "/roles",

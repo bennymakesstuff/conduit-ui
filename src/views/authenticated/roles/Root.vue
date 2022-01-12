@@ -18,6 +18,7 @@
       <div>
         <DataTable class="p-datatable-sm"
                    :value="roles"
+                   v-if="$route.name===route.name"
                    showGridlines
                    responsiveLayout="scroll"
                    v-model:filters="filters"

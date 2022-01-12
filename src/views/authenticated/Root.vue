@@ -49,20 +49,17 @@ $navigation_width_compact: 4rem;
     display: inline-block;
     min-height: 100vh;
     font-size: 1rem;
+    background-color: $inner_content_pane_color;
     z-index: 9;
     height: 100vh;
     position: relative;
-    background-color: #ffffff;
 
     > .inner-content-pane {
-      height: calc(100vh - 1rem);
+      height: 100vh;
       overflow: scroll;
-      border-radius: 1rem;
-      width: calc(100% - 0.5rem);
-      background-color: $inner_content_pane_color;
-      margin-top: 0.5rem;
-      box-shadow: inset 1px 1px 5px #c7c7c7;
-      border: 1px solid #d9d9d9;
+      width: 100%;
+      background-color: transparent;
+      border-left: 1px solid #eaeaea;
     }
   }
 

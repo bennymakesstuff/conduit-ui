@@ -6,13 +6,26 @@
       </div>
 
       <NavMenuItem @click="navigateTo('dashboard')" link="users" title="Dashboard" icon="I">
-        <i class="pi pi-check"></i>
+        <i class="pi pi-th-large"></i>
       </NavMenuItem>
-      <NavMenuItem @click="navigateTo('user')" link="users" title="User" icon="I"/>
-      <NavMenuItem @click="navigateTo('roles')" link="roles" title="Roles" icon="I"/>
-      <NavMenuItem @click="navigateTo('permissions')" link="permissions" title="Permissions" icon="I"/>
-      <NavMenuItem @click="logout_user" title="Logout" icon="I"/>
-      <NavMenuItem @click="toggleWidth" title="W" icon="I"/>
+      <NavMenuItem @click="navigateTo('user')" link="users" title="User" icon="I">
+        <i class="pi pi-user"></i>
+      </NavMenuItem>
+      <NavMenuItem @click="navigateTo('roles')" link="roles" title="Roles" icon="I">
+        <i class="pi pi-briefcase"></i>
+      </NavMenuItem>
+      <NavMenuItem @click="navigateTo('permissions')" link="permissions" title="Permissions" icon="I">
+        <i class="pi pi-unlock"></i>
+      </NavMenuItem>
+      <NavMenuItem @click="navigateTo('app_settings')" link="app_settings" title="App Settings" icon="I">
+        <i class="pi pi-cog"></i>
+      </NavMenuItem>
+      <NavMenuItem @click="logout_user" title="Logout" icon="I">
+        <i class="pi pi-user"></i>
+      </NavMenuItem>
+      <NavMenuItem @click="toggleWidth" title="" icon="I">
+        <i :class="[{'rotate-180': $store.getters.getNavigationSize}, 'menu-size-toggle', 'pi', 'pi-angle-left']"></i>
+      </NavMenuItem>
   </div>
 </template>
 
@@ -43,7 +56,9 @@ export default {
   text-align: left;
   height: 100vh;
   background: #ffffff;
-
+  transition: width 120ms ease;
+  overflow: hidden;
+  white-space: nowrap;
 
   > .logo-area {
     margin-top: 1rem;
@@ -55,5 +70,9 @@ export default {
     line-height: 3rem;
     font-size: 1.5rem;
   }
+}
+
+.menu-size-toggle {
+  transition: transform 150ms ease;
 }
 </style>

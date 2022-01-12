@@ -2,7 +2,7 @@
 
 // Font Imports
 @import url('https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300;400;500;600;700&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900&display=swap');
 $inner_content_pane_color: #f9f9f9;
 
 
@@ -11,7 +11,9 @@ html, body {
   border: 0;
   overflow: hidden;
   position: fixed;
-  font-family: 'Quicksand', sans-serif;
+  //font-family: 'Quicksand', sans-serif;
+  font-family: 'Cairo', sans-serif;
+  font-weight: 200;
 }
 
 .p-mw-20 {
@@ -119,4 +121,33 @@ html, body {
     margin: 0;
     cursor: pointer;
   }
+}
+
+.p-inputtext-sm {
+  padding: 0.35rem 0.45rem !important;
+  outline: none !important;
+}
+
+.p-inputtext-sm:hover {
+  outline: none !important;
+}
+
+h1 { font-weight: 400; }
+
+// Helper Style for rotating 180
+.rotate-180 {transform: rotate(180deg);}
+
+// Restyle search bars
+.p-inputtext.p-component {
+  padding: 0.3rem 0.5rem 0.25rem 1.7rem;
+  border-radius: 0.25rem;
+}
+// Moves search icon in search bars
+.p-input-icon-left > i:first-of-type {
+  left: 0.4rem !important; top: 0.87rem;
+}
+
+// Remove Highlighting from fields
+.p-inputtext:enabled:focus {
+  box-shadow: none;
 }
