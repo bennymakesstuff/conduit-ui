@@ -179,7 +179,7 @@ export default {
           console.log('%cMessage: %c' + data.message, "color:red", "color:black");
         }
 
-        this.roles = data.roles;
+        this.navigateTo('roles');
       }
       catch (error) {
         console.log('%cCould not create new role', "color:red");
