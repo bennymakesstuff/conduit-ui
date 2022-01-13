@@ -10,6 +10,8 @@
       </NavMenuItem>
       <NavMenuItem @click="navigateTo('user')" link="users" title="User" icon="I">
         <i class="pi pi-user"></i>
+      </NavMenuItem><NavMenuItem @click="navigateTo('users')" link="users" title="Users" icon="I">
+        <i class="pi pi-users"></i>
       </NavMenuItem>
       <NavMenuItem @click="navigateTo('roles')" link="roles" title="Roles" icon="I">
         <i class="pi pi-briefcase"></i>

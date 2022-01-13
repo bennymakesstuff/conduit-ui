@@ -4,12 +4,12 @@
  */
 export const user_routes = [
   {
-    path: "profile-settings",
+    path: "account/profile-settings",
     name: "user_profilesettings",
     component: () => import(/* webpackChunkName: "user" */ '@/views/authenticated/user/SettingsProfile.vue')
   },
   {
-    path: "utilities",
+    path: "account/utilities",
     name: "user_utilities",
     component: () => import(/* webpackChunkName: "user" */ '@/views/authenticated/user/Utilities.vue')
   },

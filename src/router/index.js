@@ -10,6 +10,7 @@ import { app_settings_routes } from './app_settings_routes.js';
 import store from '@/store';
 import {$axios as $http} from "@/axios";
 import {permission_routes} from "@/router/permission_routes";
+import {users_routes} from "@/router/users_routes";
 
 const UNAUTHENTICATED_REDIRECT_PATH = '/';
 const AUTHENTICATED_REDIRECT_PATH = '/account';
@@ -60,7 +61,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "core" */ '@/views/authenticated/Root.vue'),
     children: [
       {
-      path: "/user",
+      path: "/account",
       name: "user",
       component: () => import(/* webpackChunkName: "core" */ '@/views/authenticated/user/Root.vue'),
       meta: {
@@ -89,6 +90,16 @@ const routes = [
       },
       children: role_routes
     },
+      {
+        path: "/users",
+        name: "users",
+        component: () => import(/* webpackChunkName: "core" */ '@/views/authenticated/users/Root.vue'),
+        meta: {
+          color: 'green',
+          requiresAuth: true,
+        },
+        children: users_routes
+      },
     {
       path: "/permissions",
       name: "permissions",
