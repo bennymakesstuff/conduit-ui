@@ -28,6 +28,7 @@ import OverlayPanel from 'primevue/overlaypanel';
 import Tooltip from 'primevue/tooltip';
 import Divider from 'primevue/divider';
 import TabMenu from 'primevue/tabmenu';
+import Knob from 'primevue/knob';
 
 // Application Settings
 const ROUTE_REHYDRATION = true; // Turn this off for production
@@ -58,6 +59,7 @@ app.component('InputSwitch', InputSwitch);
 app.component('Dialog', Dialog);
 app.component('OverlayPanel', OverlayPanel);
 app.component('Divider', Divider);
+app.component('Knob', Knob);
 app.component('TabMenu', TabMenu);
 
 app.directive('tooltip', Tooltip);

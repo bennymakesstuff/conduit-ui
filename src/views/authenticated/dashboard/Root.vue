@@ -7,8 +7,8 @@
 
     <div class="dash-grid">
       <div class="p-grid">
-        <div class="p-col-4 p-m-2">4</div>
-        <div class="p-col p-m-2">1</div>
+        <ActiveUsers />
+        <ActiveRoles />
         <div class="p-col p-m-2">1</div>
         <div class="p-col p-m-2">1</div>
         <div class="p-col p-m-2">1</div>
@@ -29,13 +29,20 @@
 </template>
 
 <script>
+import ActiveUsers from '@/views/authenticated/dashboard/stats/StatActiveUsers.vue';
+import ActiveRoles from '@/views/authenticated/dashboard/stats/StatActiveRoles.vue';
 
 export default {
   name: 'UserDashboard',
   components: {
+    ActiveUsers,
+    ActiveRoles
   },
   data: function() {
     return {
+      stats: {
+        users: 12
+      },
       default_user: {
         username: '',
         firstname: '',

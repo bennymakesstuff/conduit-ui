@@ -47,9 +47,9 @@
 
           <Column field="firstname" header="Given Name" style="width: 20rem;" :sortable="true"></Column>
 
-          <Column field="lastname" header="Surname"></Column>
+          <Column field="lastname" header="Surname" :sortable="true"></Column>
 
-          <Column field="email" header="Email Address"></Column>
+          <Column field="email" header="Email Address" :sortable="true"></Column>
 
           <Column field="active" header="" style="width: 5rem;text-align:center;">
             <template #body="slotProps">
