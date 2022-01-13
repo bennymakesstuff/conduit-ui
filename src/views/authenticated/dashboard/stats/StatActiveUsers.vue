@@ -23,7 +23,7 @@ export default {
   },
   mounted() {
     this.getUserCount();
-    setInterval(this.getUserCount, 2000);
+    setInterval(this.getUserCount, 10000);
   },
   methods: {
     getUserCount: async function() {

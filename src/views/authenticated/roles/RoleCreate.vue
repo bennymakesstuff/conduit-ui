@@ -39,8 +39,20 @@
 
     <!-- TABLES FOR PERMISSIONS -->
     <div>
+      <select v-if="false">
+        <option v-for="(group, index) in permission_groups" :key="index">{{group.title}}</option>
+      </select>
+      <Dropdown
+          class="p-mb-2"
+          v-model="selected_group"
+          :options="permission_groups"
+          optionLabel="title"
+          placeholder="Add Permission Group"
+          :filter="true"
+          filterPlaceholder="Find Group"/>
+
         <DataTable  class="p-datatable-sm permission-table"
-                    v-for="group in permissions_groups"
+                    v-for="group in permissions"
                     :key="group.group_id"
                    :value="group.permissions"
                    showGridlines
@@ -80,6 +92,7 @@ export default {
         title: '',
         description: 'Create a new role',
       },
+      selected_group: null,
       new_role: {
         identifier: '',
         title: '',
@@ -87,7 +100,9 @@ export default {
         group: '',
         permissions: []
       },
-      permissions_groups: [
+      omit_groups: [],
+      permission_groups: [],
+      permissions: [
         {
           "group_id": 0,
           "title": "User Management",
@@ -167,7 +182,32 @@ export default {
       return 'Issue Found'
     }
   },
+  mounted() {
+    this.getPermissionGroups();
+  },
   methods: {
+    addPermissionGroup: function() {
+      console.log('A thing');
+    },
+
+    getPermissionGroups: async function() {
+      try {
+        let response = await $http.get('http://localhost:8000/api/v1/permissions/groups');
+        let data = response.data;
+
+        // Get a list of permission groups
+        if (data.status === false) {
+          console.log('%cCould not retrieve permission groups', "color:red");
+          console.log('%cMessage: %c' + data.message, "color:red", "color:black");
+        }
+
+        this.permission_groups = data.permission_groups;
+      }
+      catch (error) {
+        console.log('%cCould not retrieve permission groups', "color:red");
+        console.log(error);
+      }
+    },
     saveRole: async function() {
       try {
         let response = await $http.post('http://localhost:8000/api/v1/roles/create', {'new_user': this.new_role});

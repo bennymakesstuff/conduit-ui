@@ -1,9 +1,18 @@
 <template>
   <div class="inner-content">
 
-    <div class="default_title">
-      <h1>{{ 'Hi, ' + user.firstname }}</h1>
-    </div>
+      <div class="route-header">
+        <div class="details">
+          <h1 class="route-title">{{ 'Hi, ' + user.firstname }}</h1>
+          <p class="route-description"></p>
+        </div>
+        <div class="center"></div>
+        <div class="controls">
+          <div>
+            <Button label="Create Role" @click="navigateTo('role-create')" class="p-button-sm" />
+          </div>
+        </div>
+      </div>
 
     <div class="dash-grid">
       <div class="p-grid">
@@ -27,8 +36,10 @@ export default {
   },
   data: function() {
     return {
-      stats: {
-        users: 12
+      route: {
+        name: 'dashboard',
+        title: 'Dashboard',
+        description: null,
       },
       default_user: {
         username: '',

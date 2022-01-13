@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="outer-content">
 
     <div v-if="$route.name===route.name" class="">
       <div class="route-header">
