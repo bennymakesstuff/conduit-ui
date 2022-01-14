@@ -107,7 +107,7 @@ export default {
     },
     getRoles: async function() {
       try {
-        let response = await $http.get('http://localhost:8000/api/v1/roles');
+        let response = await $http.get(this.$store.state.api + 'roles');
         let data = response.data;
 
         // Check status of login response

@@ -112,7 +112,7 @@ export default {
     },
     getPermissions: async function() {
       try {
-        let response = await $http.get('http://localhost:8000/api/v1/permissions');
+        let response = await $http.get(this.$store.state.api + 'permissions');
         let data = response.data;
 
         // Check status of login response

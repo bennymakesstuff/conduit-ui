@@ -76,7 +76,7 @@ html, body {
   width: 0.7rem !important;
   height: 1rem !important;
   left: 0.15rem !important;
-  margin-top: -0.475rem !important;
+  margin-top: -0.525rem !important;
   border-radius: 0.1rem !important;
   transition-duration: 0.2s;
 }
@@ -142,6 +142,20 @@ h1 { font-weight: 400; }
   padding: 0.3rem 0.5rem 0.25rem 1.7rem;
   border-radius: 0.25rem;
 }
+
+// Restyle dropdowns
+.p-dropdown, .p-dropdown-label, .p-dropdown-items-wrapper, .p-dropdown-filter {
+  font-size: 0.7rem !important;
+}
+
+.p-dropdown-filter-container > input {padding-left: 0;}
+
+.p-dropdown-filter-icon {
+  font-size: 0.8rem;
+  padding-top: 0.15rem;
+  margin-right: -0.4rem;
+}
+
 // Moves search icon in search bars
 .p-input-icon-left > i:first-of-type {
   left: 0.4rem !important; top: 0.87rem;
@@ -157,4 +171,31 @@ h1 { font-weight: 400; }
 .stat-text {
   color: #696969;
   font-weight: 400;
+}
+
+
+// Tab Menu Styles
+.p-tabmenu .p-tabmenu-nav, .p-tabmenuitem, .p-menuitem-link {
+  background: transparent !important;
+}
+
+.p-menuitem-text {
+  font-weight: 400;
+  font-size: 0.8rem;
+}
+
+
+// Column Header Overrides
+
+// Column Icon e.g. Sort icons
+.p-sortable-column-icon {
+  font-size: 0.7rem;
+  color: #5b5b5b;
+}
+
+// Column titles
+.p-column-title {
+  font-weight: 500;
+  font-size: 0.6rem;
+  color: #5B5B5BFF;
 }

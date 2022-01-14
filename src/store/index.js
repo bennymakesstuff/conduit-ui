@@ -12,6 +12,7 @@ export default createStore({
   state: {
     application_route: null,
     compact_navigation: false,
+    api: "http://localhost:8000/api/v1/",
   },
   mutations: {
     /**
