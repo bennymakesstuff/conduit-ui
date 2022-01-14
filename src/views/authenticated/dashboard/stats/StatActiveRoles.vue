@@ -23,7 +23,7 @@ export default {
   },
   mounted() {
     this.getRolesCount();
-    setInterval(this.getRolesCount, 10000);
+    //setInterval(this.getRolesCount, 10000);
   },
   methods: {
     getRolesCount: async function() {

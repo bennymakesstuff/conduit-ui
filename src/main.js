@@ -73,8 +73,24 @@ app.mixin({
     /**
      * Navigates to a given named route
      */
-    navigateTo: function(route) {
-      router.push({name: route});
+    navigateTo: function(route, params = null, is_path = false) {
+      if (params) {
+        if (is_path) {
+          router.push({path: route, params: params});
+        }
+        else {
+          router.push({name: route, params: params});
+        }
+      }
+      else {
+        if (is_path) {
+          console.log('Hitting here');
+          router.push({path: route});
+        }
+        else {
+          router.push({name: route});
+        }
+      }
     },
     /**
      * Logs out the application user

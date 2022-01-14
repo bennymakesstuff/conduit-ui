@@ -10,9 +10,9 @@
         </div>
         <div class="center"></div>
         <div class="controls">
-          <Button label="Check Permissions" class="button-set p-m-1 p-button-sm" @click="generatePermissionSet"/>
-          <Button label="Save" class="button-set p-m-1 p-button-sm" @click="saveRole"/>
-          <Button label="Cancel" class="button-set p-m-1 p-button-sm" @click="close"/>
+          <Button label="Check Permissions" class="p-m-1 p-button-sm" @click="generatePermissionSet"/>
+          <Button label="Save" class="p-m-1 p-button-sm" @click="saveRole"/>
+          <Button label="Cancel" class="p-m-1 p-button-sm" @click="close"/>
         </div>
       </div>
     </div>

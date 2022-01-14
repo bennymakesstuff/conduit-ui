@@ -34,6 +34,15 @@ html, body {
 
 }
 
+button {
+  max-height: 2rem;
+}
+
+button:hover {
+  background-color: lighten(#3B82F6, 5%);
+}
+
+
 .route-header {
   display: flex;
   margin-bottom: 1rem;
@@ -52,6 +61,14 @@ html, body {
   > .controls {
     flex: none;
     display: flex;
+
+    > button {
+      max-height: 2rem;
+    }
+
+    > button:hover {
+      background-color: lighten(#3B82F6, 5%);
+    }
   }
 
   > div > div {

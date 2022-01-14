@@ -53,7 +53,7 @@
 
           <Column field="active" header="" style="width: 5rem;text-align:center;">
             <template #body="slotProps">
-              <button label="Edit" class="p-button-xs">
+              <button label="Edit" class="p-button-xs" @click="navigateTo('user-view', {userid: slotProps.data.uuid} )">
                 <i class="pi pi-pencil"></i>
                 <p>Edit</p>
               </button>
