@@ -122,18 +122,26 @@ export default {
     this.getUsers();
   },
   methods: {
-    toggle(event) {
-      this.$refs.op.toggle(event);
-    },
+    /**
+     * Returns a list of users
+     * @returns {Promise<void>}
+     */
     getUsers: async function() {
       try {
-        let response = await $http.get('http://localhost:8000/api/v1/users');
+        let response = await $http.get(this.$store.state.api + 'users');
         let data = response.data;
 
         // Check status of login response
         if (data.status === false) {
           console.log('%cCould not retrieve users', "color:red");
           console.log('%cMessage: %c' + data.message, "color:red", "color:black");
+          this.$toast.add({
+            severity: 'error',
+            summary: 'Could not retrieve users',
+            detail: data.message || 'A Server error occurred.',
+            life: 3000,
+            styleClass: 'compact-toast'
+          });
         }
 
         this.users = data.users;
@@ -141,6 +149,13 @@ export default {
       catch (error) {
         console.log('%cCould not retrieve users', "color:red");
         console.log(error);
+        this.$toast.add({
+          severity: 'error',
+          summary: 'Could not retrieve users',
+          detail: data.message || 'A Server error occurred.',
+          life: 3000,
+          styleClass: 'compact-toast'
+        });
       }
     }
   }

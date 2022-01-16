@@ -11,7 +11,7 @@
         <div class="center"></div>
         <div class="controls">
           <Button v-if="viewEdit && checkPermission('user:update')" :label="editModeButton" class="button-set p-m-1 p-button-sm" @click="toggleEdit"/>
-          <Button v-if="!viewEdit" label="Create" class="button-set p-m-1 p-button-sm" @click="saveUser"/>
+          <Button v-if="!viewEdit" label="Create" class="button-set p-m-1 p-button-sm" @click="saveUser('create')"/>
           <Button label="Back to List" class="button-set p-m-1 p-button-sm" @click="close"/>
         </div>
       </div>
@@ -285,6 +285,9 @@ export default {
   },
   methods: {
     toggleEdit: function() {
+      if (this.edit_mode === true) {
+        this.saveUser('update');
+      }
       this.edit_mode = !this.edit_mode;
     },
     loadUser: async function() {
@@ -306,15 +309,18 @@ export default {
         console.log(error);
       }
     },
-    saveUser: async function() {
+    saveUser: async function(create_or_update = 'create') {
       try {
-        let response = await $http.post(this.$store.state.api + 'users/create', {
-          'email': this.user.email,
-          'firstname': this.user.firstname,
-          'lastname': this.user.lastname,
-          'password': this.user.password,
-          'roles': this.user.roles,
+        let url = 'users/create'
+        if (create_or_update === 'update') {
+          url = 'users/update'
+        }
+
+        let response = await $http.post(this.$store.state.api + url, {
+          'uuid': this.user.uuid,
+          'user': this.user,
         });
+        
         let data = response.data;
 
         // Send request to create new user
@@ -331,14 +337,26 @@ export default {
         }
         else {
           this.navigateTo('users');
-          this.$toast.add({
-            severity: 'success',
-            summary: 'New User Created',
-            detail: `"${this.user.firstname} ${this.user.lastname}" has been added.`,
-            life: 3000,
-            styleClass: 'compact-toast'
-          });
-          this.$emit('created-user');
+
+          if (create_or_update === 'update') {
+            this.$toast.add({
+              severity: 'success',
+              summary: 'Updated User',
+              detail: `"${this.user.firstname} ${this.user.lastname}" has been updated.`,
+              life: 3000,
+              styleClass: 'compact-toast'
+            });
+            this.$emit('created-updated');
+          } else {
+            this.$toast.add({
+              severity: 'success',
+              summary: 'New User Created',
+              detail: `"${this.user.firstname} ${this.user.lastname}" has been added.`,
+              life: 3000,
+              styleClass: 'compact-toast'
+            });
+            this.$emit('created-user');
+          }
         }
       }
       catch (error) {
