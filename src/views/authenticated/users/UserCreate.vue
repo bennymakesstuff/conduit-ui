@@ -422,6 +422,8 @@ export default {
       }
     },
     removeRoleFromUser: async function(uuid) {
+      // TODO: Get is function working properly. (Need to not delete the record but deactivate it)
+      // TODO:   This is for history purposes. Should have a record of what roles peoples have had and when
       try {
         let response = await $http.post(this.$store.state.api + 'users/remove-role', {
           'user': this.user.uuid,
