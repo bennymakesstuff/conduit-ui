@@ -17,7 +17,7 @@
 
       <div>
         <DataTable class="p-datatable-sm"
-                   :value="users"
+                   :value="viewableUsers"
                    showGridlines
                    responsiveLayout="scroll"
                    v-model:filters="filters"
@@ -104,7 +104,20 @@ export default {
       users: []
     }
   },
+  computed: {
+    /**
+     * Shows the list of users without the logged in user in it
+     * @returns {*[]}
+     */
+    viewableUsers: function(){
+      let current_user_id = this.$store.getters.getUser.uuid;
 
+      return this.users.filter(function (el) {
+        return el.uuid !== current_user_id;
+      });
+
+    },
+  },
   mounted() {
     this.getUsers();
   },
