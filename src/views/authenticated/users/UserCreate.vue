@@ -320,7 +320,7 @@ export default {
           'uuid': this.user.uuid,
           'user': this.user,
         });
-        
+
         let data = response.data;
 
         // Send request to create new user
@@ -389,17 +389,61 @@ export default {
         console.log(error);
       }
     },
-    addRoleToUser: function(uuid) {
+    addRoleToUser: async function(uuid) {
       console.log('Adding Role to User');
       let role = this.available_roles.find(element => element.uuid === uuid);
       console.log(role);
       if (role) {
+        role.active_from = this.humanDate(Date.now());
         this.user.roles.push(role);
         this.selected_role = null;
+
+        try {
+          let response = await $http.post(this.$store.state.api + 'users/add-role', {
+            'user': this.user.uuid,
+            'role': uuid
+          });
+          let data = response.data;
+
+          // Check status of login response
+          if (data.status === false) {
+            this.removeRoleFromUser(uuid);
+            console.log('%cCould not add role to the user', "color:red");
+            console.log('%cMessage: %c' + data.message, "color:red", "color:black");
+          }
+
+        }
+        catch (error) {
+          this.removeRoleFromUser(uuid);
+          console.log('%cCould not add role to the user', "color:red");
+          console.log(error);
+        }
+
       }
     },
-    removeRoleFromUser: function(uuid) {
-      this.user.roles.splice(this.user.roles.findIndex(item => item.uuid === uuid), 1);
+    removeRoleFromUser: async function(uuid) {
+      try {
+        let response = await $http.post(this.$store.state.api + 'users/remove-role', {
+          'user': this.user.uuid,
+          'role': uuid
+        });
+        let data = response.data;
+
+        // Check status of login response
+        if (data.status === false) {
+          this.removeRoleFromUser(uuid);
+          console.log('%cCould not retrieve roles', "color:red");
+          console.log('%cMessage: %c' + data.message, "color:red", "color:black");
+        }
+
+        this.user.roles.splice(this.user.roles.findIndex(item => item.uuid === uuid), 1);
+      }
+      catch (error) {
+        this.removeRoleFromUser(uuid);
+        console.log('%cCould not retrieve roles', "color:red");
+        console.log(error);
+      }
+
     },
     close: function() {
       this.navigateTo('users');
