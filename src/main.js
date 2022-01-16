@@ -32,6 +32,7 @@ import Knob from 'primevue/knob';
 import Dropdown from 'primevue/dropdown';
 import Badge from 'primevue/badge';
 import InputMask from 'primevue/inputmask';
+import Avatar from 'primevue/avatar';
 
 // Application Settings
 const ROUTE_REHYDRATION = true; // Turn this off for production
@@ -67,6 +68,7 @@ app.component('TabMenu', TabMenu);
 app.component('Dropdown', Dropdown);
 app.component('Badge', Badge);
 app.component('InputMask', InputMask);
+app.component('Avatar', Avatar);
 
 app.directive('tooltip', Tooltip);
 
@@ -150,6 +152,23 @@ app.mixin({
         body: JSON.stringify(data)
       });
       return response.json();
+    },
+
+    /**
+     * Accepts a tiemstamp and returns a human readable date
+     * @param timestamp
+     * @returns {`${number}/${number}/${number}`}
+     */
+    humanDate: function(timestamp) {
+      let date = new Date(timestamp);
+      let day = ("0" + (date.getDate() + 1)).slice(-2)
+      let month = ("0" + (date.getMonth() + 1)).slice(-2)
+      if (this.$store.state.application_config.date_format === 'US') {
+        return `${month}/${day}/${date.getFullYear()}`;
+      }
+      else {
+        return `${day}/${month}/${date.getFullYear()}`;
+      }
     }
 
   }

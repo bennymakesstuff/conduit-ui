@@ -261,7 +261,7 @@ export default {
             life: 3000,
             styleClass: 'compact-toast'
           });
-          this.emit('created-role');
+          this.$emit('created-role');
           this.navigateTo('roles');
         }
       }

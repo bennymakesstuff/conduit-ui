@@ -79,7 +79,7 @@
         </div>
 
 
-          <div class="general-info p-p-0 grid-item">
+          <div class="general-info p-p-0 grid-item" style="padding-bottom: 1rem;">
             <div class="grid-item-title">
               Roles & Permissions
               <Badge v-if="user.roles.length > 0" :value="user.roles.length" style="margin-left: 0.5rem; margin-top: 0.25rem;"></Badge>
@@ -106,7 +106,8 @@
                              :value="user.roles"
                              showGridlines
                              responsiveLayout="scroll"
-                             scrollHeight="10rem" >
+                             scrollHeight="10rem"
+                             style="min-width: 18rem;">
                     <template #header>Active Roles</template>
                     <template #empty>
                       <div  style="text-align: center; width: 100%; padding: 1rem; color: #8d8d8d;">
@@ -124,7 +125,11 @@
                       </template>
                     </Column>
 
-                    <Column v-if="viewEdit" field="active_from" header="Active From"></Column>
+                    <Column v-if="viewEdit" header="Active From">
+                      <template #body="slotProps">
+                        {{this.humanDate(slotProps.data.active_from)}}
+                      </template>
+                    </Column>
 
 
                     <Column field="active" header="" style="width: auto;text-align:center;">
@@ -282,19 +287,43 @@ export default {
           'email': this.user.email,
           'firstname': this.user.firstname,
           'lastname': this.user.lastname,
-          'password': this.user.password
+          'password': this.user.password,
+          'roles': this.user.roles,
         });
         let data = response.data;
 
         // Send request to create new user
         if (data.status === false) {
+          this.$toast.add({
+            severity: 'error',
+            summary: 'Failed to create new user',
+            detail: 'A server error occurred and the user could not be created.',
+            life: 3000,
+            styleClass: 'compact-toast'
+          });
           console.log('%cCould not create new user', "color:red");
           console.log('%cMessage: %c' + data.message, "color:red", "color:black");
         }
-
-        this.navigateTo('user-view', {userid: data.user.uuid});
+        else {
+          this.navigateTo('users');
+          this.$toast.add({
+            severity: 'success',
+            summary: 'New User Created',
+            detail: `"${this.user.firstname} ${this.user.lastname}" has been added.`,
+            life: 3000,
+            styleClass: 'compact-toast'
+          });
+          this.$emit('created-user');
+        }
       }
       catch (error) {
+        this.$toast.add({
+          severity: 'error',
+          summary: 'Failed to create new user',
+          detail: 'A server error occurred and the user could not be created.',
+          life: 3000,
+          styleClass: 'compact-toast'
+        });
         console.log('%cCould not create new user', "color:red");
         console.log(error);
       }

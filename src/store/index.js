@@ -13,6 +13,9 @@ export default createStore({
     application_route: null,
     compact_navigation: false,
     api: "http://localhost:8000/api/v1/",
+    application_config: {
+      date_format: 'AU'
+    }
   },
   mutations: {
     /**

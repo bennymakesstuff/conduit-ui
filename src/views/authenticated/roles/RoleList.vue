@@ -1,5 +1,5 @@
 <template>
-  <div class="outer-content">
+  <div>
 
     <div v-if="$route.name===route.name" class="">
       <div class="route-header">
@@ -69,14 +69,12 @@
 </template>
 
 <script>
-import CreateRole from '@/views/authenticated/roles/RoleCreate.vue';
-import {FilterMatchMode,FilterOperator} from 'primevue/api';
+import {FilterMatchMode} from 'primevue/api';
 import {$axios as $http} from "@/axios";
 
 export default {
-  name: 'RolesRoot',
+  name: 'RoleList',
   components: {
-    CreateRole
   },
   data: function() {
     return {
@@ -88,7 +86,6 @@ export default {
       loading: false,
       display_modal: true,
       checked: true,
-      user: this.$store.getters.getUser || this.default_user,
       filters: {
         'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
         'title': { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -129,10 +126,6 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/theme/main.scss';
-
-.outer-content {
-  padding: 1rem;
-}
 
 .slider-container {
   width: 20rem;
