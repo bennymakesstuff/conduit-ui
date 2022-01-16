@@ -30,6 +30,7 @@ import Divider from 'primevue/divider';
 import TabMenu from 'primevue/tabmenu';
 import Knob from 'primevue/knob';
 import Dropdown from 'primevue/dropdown';
+import Badge from 'primevue/badge';
 
 // Application Settings
 const ROUTE_REHYDRATION = true; // Turn this off for production
@@ -63,6 +64,7 @@ app.component('Divider', Divider);
 app.component('Knob', Knob);
 app.component('TabMenu', TabMenu);
 app.component('Dropdown', Dropdown);
+app.component('Badge', Badge);
 
 app.directive('tooltip', Tooltip);
 

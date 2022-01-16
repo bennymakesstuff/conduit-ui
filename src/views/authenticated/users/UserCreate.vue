@@ -17,29 +17,37 @@
       </div>
 
       <div class="p-grid">
-        <div class="general-info p-col-12 p-p-0 grid-item">
+        <div class="general-info p-p-0 grid-item">
           <div class="grid-item-title">
             General Details
           </div>
           <div class="grid-item-inner">
             <div class="left">
-              <InputText class="p-m-1 p-col-12 p-inputtext-sm" :disabled="editMode" v-model="user.firstname" placeholder="Given Name" />
-              <InputText class="p-m-1 p-col-12 p-inputtext-sm" :disabled="editMode" v-model="user.lastname" placeholder="Surname" />
+              <InputText class="p-m-1 p-inputtext-sm" :disabled="editMode" v-model="user.firstname" placeholder="Given Name" />
+              <InputText class="p-m-1 p-inputtext-sm" :disabled="editMode" v-model="user.lastname" placeholder="Surname" />
             </div>
             <div class="right">
-              <InputText class="p-m-1 p-col-12 p-inputtext-sm" :disabled="editMode" v-model="user.email" placeholder="Email Address" />
-              <InputText class="p-m-1 p-col-12 p-inputtext-sm" :disabled="editMode" v-model="user.phone" placeholder="Phone" />
+              <InputText class="p-m-1 p-inputtext-sm" :disabled="editMode" v-model="user.email" placeholder="Email Address" />
+              <InputText class="p-m-1 p-inputtext-sm" :disabled="editMode" v-model="user.phone" placeholder="Phone" />
             </div>
           </div>
         </div>
 
-        <div class="general-info p-col-6 p-p-0 grid-item" v-if="!viewEdit">
+        <div class="general-info p-p-0 grid-item" v-if="!viewEdit">
           <div class="grid-item-title">
-            Passwords & Security
+            New User's Password
+          </div>
+          <div class="grid-item-inner">
+            Send via Email?
+          </div>
+          <div class="grid-item-inner">
+            <button class="p-button-xs" style="cursor: pointer;padding: 0.3rem !important;">
+              Create a strong password
+            </button>
           </div>
           <div class="grid-item-inner">
             <InputText
-                class="p-m-1 p-col-12 p-inputtext-sm"
+                class="p-m-1 p-inputtext-sm"
                 :disabled="editMode"
                 v-model="user.password"
                 placeholder="Password" />
@@ -47,18 +55,91 @@
         </div>
 
 
-        <div class="general-info p-col-5 p-p-0 grid-item" v-if="!viewEdit">
+        <div class="general-info p-p-0 grid-item" v-if="viewEdit">
           <div class="grid-item-title">
             Passwords & Security
           </div>
           <div class="grid-item-inner">
             <InputText
-                class="p-m-1 p-col-12 p-inputtext-sm"
+                class="p-m-1 p-inputtext-sm"
                 :disabled="editMode"
                 v-model="user.password"
                 placeholder="Password" />
           </div>
         </div>
+
+        <div class="general-info p-p-0 grid-item" v-if="viewEdit">
+          <div class="grid-item-title">
+            Activity
+          </div>
+          <div class="grid-item-inner">
+            <InputText
+                class="p-m-1 p-inputtext-sm"
+                :disabled="editMode"
+                v-model="user.password"
+                placeholder="Password" />
+          </div>
+        </div>
+
+
+          <div class="general-info p-p-0 grid-item">
+            <div class="grid-item-title">
+              Roles & Permissions
+              <Badge v-if="user.roles.length > 0" :value="user.roles.length" style="margin-left: 0.5rem; margin-top: 0.25rem;"></Badge>
+            </div>
+            <div class="grid-item-inner user-roles-widget">
+              <div>
+                <Dropdown class="available-roles" :options="viewableRoles" optionLabel="title" placeholder="Add a Role" :filter="true" filterPlaceholder="Search Roles">
+                  <template #loading>
+                    <div>
+                      <span>Loading Roles</span>
+                    </div>
+                  </template>
+                  <template #option="slotProps">
+                    <div class="p-dropdown-option role-option" @click="addRoleToUser(slotProps.option.uuid)" style="height: 100%;background-color: red; padding: 0;margin: 0;">
+                      <span>{{slotProps.option.title}}</span>
+                    </div>
+                  </template>
+                </Dropdown>
+              </div>
+              <div>
+                <div class="">
+                  <DataTable class="p-datatable-sm"
+                             :value="user.roles"
+                             showGridlines
+                             responsiveLayout="scroll"
+                             :loading="loading"
+                             scrollHeight="10rem" >
+                    <template #header>Active Roles</template>
+                    <template #empty>
+                      <div  style="text-align: center; width: 100%; padding: 1rem; color: #8d8d8d;">
+                        No roles assigned.
+                      </div>
+                    </template>
+                    <template #loading>
+                      Loading users roles. Please wait.
+                    </template>
+
+                    <Column field="title" header="Role" style="width: 15rem;"></Column>
+
+                    <Column v-if="viewEdit" field="active_from" header="Active From"></Column>
+
+
+                    <Column field="active" header="" style="width: auto;text-align:center;">
+                      <template #body="slotProps">
+                        <button class="p-button-xs" style="cursor: pointer;padding: 0.3rem !important;">
+                          <i class="pi pi-trash" style="font-size: 0.8rem;" @click="removeRoleFromUser(slotProps.data.uuid)"></i>
+                        </button>
+                      </template>
+                    </Column>
+
+                    <template #footer></template>
+                  </DataTable>
+                </div>
+              </div>
+            </div>
+          </div>
+
 
 
     </div>
@@ -99,8 +180,11 @@ export default {
         lastname: '',
         email: '',
         phone: '',
-        password: ''
+        password: '',
+        roles: []
       },
+      available_roles: [],
+      selected_role: null
     }
   },
   computed: {
@@ -129,15 +213,43 @@ export default {
         return 'Edit User'
       }
       return 'Issue Found'
-    }
+    },
+
+    /**
+     * Shows a filtered list of roles that the user does not already have assigned
+     * @returns {*[]}
+     */
+    viewableRoles: function(){
+      let user_roles = this.user.roles;
+
+      return this.available_roles.filter(function (el) {
+        let found_flag = true;
+        for (let i = 0; i < user_roles.length; i++) {
+          if (el.uuid === user_roles[i].uuid) {
+            found_flag = false;
+          }
+        }
+        return found_flag;
+      });
+    },
   },
   mounted() {
+
+    // Only run these methods if in user "Edit" mode
     if (this.viewEdit) {
       this.user.uuid = this.$route.params.userid;
 
       // Load the users details and save into user
       this.loadUser();
     }
+
+    // Only run these methods if in user "Create" mode
+    if (!this.viewEdit) {
+      // Actions here
+    }
+
+    // Always perform these methods
+    this.getRoles();
   },
   methods: {
     toggleEdit: function() {
@@ -145,7 +257,7 @@ export default {
     },
     loadUser: async function() {
       try {
-        let response = await $http.get('http://localhost:8000/api/v1/users/' + this.user.uuid);
+        let response = await $http.get(this.$store.state.api + 'users/' + this.user.uuid);
         let data = response.data;
 
         // Send request to create new user
@@ -163,7 +275,7 @@ export default {
     },
     saveUser: async function() {
       try {
-        let response = await $http.post('http://localhost:8000/api/v1/users/create', {
+        let response = await $http.post(this.$store.state.api + 'users/create', {
           'email': this.user.email,
           'firstname': this.user.firstname,
           'lastname': this.user.lastname,
@@ -183,6 +295,36 @@ export default {
         console.log('%cCould not create new user', "color:red");
         console.log(error);
       }
+    },
+    getRoles: async function() {
+      try {
+        let response = await $http.get(this.$store.state.api + 'roles');
+        let data = response.data;
+
+        // Check status of login response
+        if (data.status === false) {
+          console.log('%cCould not retrieve roles', "color:red");
+          console.log('%cMessage: %c' + data.message, "color:red", "color:black");
+        }
+
+        this.available_roles = data.roles;
+      }
+      catch (error) {
+        console.log('%cCould not retrieve roles', "color:red");
+        console.log(error);
+      }
+    },
+    addRoleToUser: function(uuid) {
+      console.log('Adding Role to User');
+      let role = this.available_roles.find(element => element.uuid === uuid);
+      console.log(role);
+      if (role) {
+        this.user.roles.push(role);
+        this.selected_role = null;
+      }
+    },
+    removeRoleFromUser: function(uuid) {
+      this.user.roles.splice(this.user.roles.findIndex(item => item.uuid === uuid), 1);
     },
     close: function() {
       this.navigateTo('users');
@@ -204,48 +346,77 @@ export default {
 
 .general-info {
   margin: 0;
+  position: relative;
+  vertical-align: top;
 
   .grid-item-title {
     width: 100%;
     min-height: 2rem;
-    border-bottom: 1px solid #e3e3e3;
+    //border-bottom: 1px solid #e3e3e3;
     border-radius: 0;
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
     padding: 0.2rem 0.8rem;
-    font-size: 1.2rem;
+    font-size: 1rem;
+    font-weight: 500;
+    //color: #939393;
+    color: #4476b4;
   }
 
   .grid-item-inner {
-    padding: 2rem;
+    padding: 0.5rem !important;
     text-align: center;
     display: flex;
 
     > div {
       flex: 1;
-      padding: 1rem;
+      padding: 0.5rem;
     }
 
-    > div:first-child {
-      padding-left: 0;
-    }
+  }
 
-    > div:last-child {
-      padding-right: 0;
-    }
+}
+
+.grid-item {
+  background-color: #ffffff;
+  margin: 0.4rem 0.5rem;
+  border: 1px solid #e3e3e3;
+  vertical-align: top;
+  max-height: 20rem;
+}
+
+
+.user-roles-widget {
+  display: block !important;
+
+  > div {
+    text-align: left;
+  }
+
+  .title {
+    font-size: 0.8rem;
   }
 
 }
 
 
-.grid-item {
-  background-color: #ffffff;
-  //border: 1px solid #d9d9d9;
-  border-radius: 0.25rem;
-  box-shadow: 1px 0px 2px 1px rgba(187, 187, 187, 0.23);
+.role-option > span {
+  pointer-events: none;
 }
 
-.grid-item-inner {
-  padding: 2rem;
+.available-roles {
+
+  > .p-dropdown-items-wrapper {
+    border: 3px solid red;
+    > .p-dropdown-items {
+      > .p-dropdown-item {
+        padding: 0 !important;
+      }
+    }
+  }
+
 }
+
+.p-dropdown-item:has(> .role-option) {background-color: pink !important;}
+
 </style>
