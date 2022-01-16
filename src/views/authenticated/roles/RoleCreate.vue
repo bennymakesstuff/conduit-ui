@@ -172,6 +172,8 @@ export default {
         permissions_to_change[i].enabled = new_status;
       }
 
+      //
+      this.generatePermissionSet();
     },
     /**
      * Retrieves a list of all permission groups
@@ -235,18 +237,42 @@ export default {
      */
     saveRole: async function() {
       try {
+        console.log(this.new_role);
         let response = await $http.post(this.$store.state.api + 'roles/create', {'new_role': this.new_role});
         let data = response.data;
 
         // Send request to create new role
         if (data.status === false) {
+          this.$toast.add({
+            severity: 'error',
+            summary: 'Failed to create new role',
+            detail: 'A server error occurred and the role could not be created.',
+            life: 3000,
+            styleClass: 'compact-toast'
+          });
           console.log('%cCould not create new role', "color:red");
           console.log('%cMessage: %c' + data.message, "color:red", "color:black");
         }
-
-        this.navigateTo('roles');
+        else {
+          this.$toast.add({
+            severity: 'success',
+            summary: 'New Role Created',
+            detail: `The role "${this.new_role.title}" has been created.`,
+            life: 3000,
+            styleClass: 'compact-toast'
+          });
+          this.emit('created-role');
+          this.navigateTo('roles');
+        }
       }
       catch (error) {
+        this.$toast.add({
+          severity: 'error',
+          summary: 'Failed to create new role',
+          detail: 'A server error occurred and the role could not be created.',
+          life: 3000,
+          styleClass: 'compact-toast'
+        });
         console.log('%cCould not create new role', "color:red");
         console.log(error);
       }
@@ -267,9 +293,9 @@ export default {
         }
       }
 
-      let json_permissions = JSON.stringify(allowed_permissions);
-      this.new_role.permissions = json_permissions;
-      return json_permissions;
+      // Save permissions to new role
+      this.new_role.permissions = allowed_permissions;
+      return allowed_permissions;
     },
 
     /**

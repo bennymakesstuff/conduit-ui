@@ -31,6 +31,7 @@ import TabMenu from 'primevue/tabmenu';
 import Knob from 'primevue/knob';
 import Dropdown from 'primevue/dropdown';
 import Badge from 'primevue/badge';
+import InputMask from 'primevue/inputmask';
 
 // Application Settings
 const ROUTE_REHYDRATION = true; // Turn this off for production
@@ -65,6 +66,7 @@ app.component('Knob', Knob);
 app.component('TabMenu', TabMenu);
 app.component('Dropdown', Dropdown);
 app.component('Badge', Badge);
+app.component('InputMask', InputMask);
 
 app.directive('tooltip', Tooltip);
 

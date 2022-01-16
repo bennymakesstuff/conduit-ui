@@ -28,7 +28,8 @@
             </div>
             <div class="right">
               <InputText class="p-m-1 p-inputtext-sm" :disabled="editMode" v-model="user.email" placeholder="Email Address" />
-              <InputText class="p-m-1 p-inputtext-sm" :disabled="editMode" v-model="user.phone" placeholder="Phone" />
+              <InputMask mask="(99)99 999 999" class="p-m-1 p-inputtext-sm" :disabled="editMode" v-model="user.phone" placeholder="Phone" />
+              <!--<InputText class="p-m-1 p-inputtext-sm" :disabled="editMode" v-model="user.phone" placeholder="Phone" />-->
             </div>
           </div>
         </div>
@@ -73,11 +74,7 @@
             Activity
           </div>
           <div class="grid-item-inner">
-            <InputText
-                class="p-m-1 p-inputtext-sm"
-                :disabled="editMode"
-                v-model="user.password"
-                placeholder="Password" />
+
           </div>
         </div>
 
@@ -96,8 +93,9 @@
                     </div>
                   </template>
                   <template #option="slotProps">
-                    <div class="p-dropdown-option role-option" @click="addRoleToUser(slotProps.option.uuid)" style="height: 100%;background-color: red; padding: 0;margin: 0;">
-                      <span>{{slotProps.option.title}}</span>
+                    <div class="p-dropdown-option role-option" @click="addRoleToUser(slotProps.option.uuid)" style="height: 100%; padding: 0;margin: 0;">
+                      <div class="role-title">{{slotProps.option.title}}</div>
+                      <div class="role-description">{{slotProps.option.description}}</div>
                     </div>
                   </template>
                 </Dropdown>
@@ -108,7 +106,6 @@
                              :value="user.roles"
                              showGridlines
                              responsiveLayout="scroll"
-                             :loading="loading"
                              scrollHeight="10rem" >
                     <template #header>Active Roles</template>
                     <template #empty>
@@ -120,7 +117,12 @@
                       Loading users roles. Please wait.
                     </template>
 
-                    <Column field="title" header="Role" style="width: 15rem;"></Column>
+                    <Column field="title" header="Role" style="width: 15rem;">
+                      <template #body="slotProps">
+                        <div class="role-title">{{slotProps.data.title}}</div>
+                        <div class="role-description">{{slotProps.data.description}}</div>
+                      </template>
+                    </Column>
 
                     <Column v-if="viewEdit" field="active_from" header="Active From"></Column>
 
@@ -259,6 +261,7 @@ export default {
       try {
         let response = await $http.get(this.$store.state.api + 'users/' + this.user.uuid);
         let data = response.data;
+        console.log(data);
 
         // Send request to create new user
         if (data.status === false) {
@@ -289,7 +292,7 @@ export default {
           console.log('%cMessage: %c' + data.message, "color:red", "color:black");
         }
 
-        this.navigateTo('users');
+        this.navigateTo('user-view', {userid: data.user.uuid});
       }
       catch (error) {
         console.log('%cCould not create new user', "color:red");
@@ -400,8 +403,18 @@ export default {
 }
 
 
-.role-option > span {
+.role-option > div {
   pointer-events: none;
+}
+
+.role-title {}
+.role-description {
+  color: #ababab;
+  font-size: 0.6rem;
+}
+
+.role-option {
+
 }
 
 .available-roles {
