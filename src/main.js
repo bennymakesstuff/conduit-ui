@@ -179,18 +179,13 @@ app.mixin({
      */
     checkPermission: function(permission) {
 
-      console.log('LOOKING FOR PERMISSION: ' + permission);
       let user = this.$store.getters.getUser;
-      console.log(user);
 
       // Return false if a user doesnt exist
       if (user === null || !user.hasOwnProperty('permissions')) {
-        console.log('DOES NOT HAVE PERMISSION');
         return false;
       }
 
-      console.log('SHOULD HAVE PERMISSION');
-      //let position = (user.permissions.indexOf(permission) > 0)
       return (user.permissions.indexOf(permission) !== -1);
     }
 

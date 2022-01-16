@@ -9,8 +9,11 @@
         <i class="pi pi-th-large"></i>
       </NavMenuItem>
       <NavMenuItem @click="navigateTo('user')" link="users" :title="username" icon="I">
-        <i class="pi pi-user"></i>
-      </NavMenuItem><NavMenuItem @click="navigateTo('users')" link="users" title="Users" icon="I">
+        <div class="user-icon">
+          {{ userInitials }}
+        </div>
+      </NavMenuItem>
+      <NavMenuItem v-if="checkPermission('user:view')" @click="navigateTo('users')" link="users" title="Users" icon="I">
         <i class="pi pi-users"></i>
       </NavMenuItem>
       <NavMenuItem v-if="checkPermission('roles:view')" @click="navigateTo('roles')" link="roles" title="Roles" icon="I">
@@ -19,11 +22,11 @@
       <NavMenuItem v-if="checkPermission('permissions:view')" @click="navigateTo('permissions')" link="permissions" title="Permissions" icon="I">
         <i class="pi pi-unlock"></i>
       </NavMenuItem>
-      <NavMenuItem @click="navigateTo('app_settings')" link="app_settings" title="App Settings" icon="I">
+      <NavMenuItem @click="navigateTo('app_settings')" link="app_settings" title="App Settings" icon="I" class="app-settings">
         <i class="pi pi-cog"></i>
       </NavMenuItem>
       <NavMenuItem @click="logout_user" title="Logout" icon="I">
-        <i class="pi pi-user"></i>
+        <i class="pi pi-sign-out rotate-180"></i>
       </NavMenuItem>
       <NavMenuItem @click="toggleWidth" title="" icon="I">
         <i :class="[{'rotate-180': $store.getters.getNavigationSize}, 'menu-size-toggle', 'pi', 'pi-angle-left']"></i>
@@ -49,6 +52,15 @@ export default {
       if (this.$store.getters.getUser !== null) {
         let user = this.$store.getters.getUser;
         return user.firstname;
+      }
+      else {
+        return 'Your Account';
+      }
+    },
+    userInitials: function() {
+      if (this.$store.getters.getUser !== null) {
+        let user = this.$store.getters.getUser;
+        return user.firstname[0] + user.lastname[0];
       }
       else {
         return 'Your Account';
@@ -90,5 +102,15 @@ export default {
 
 .menu-size-toggle {
   transition: transform 150ms ease;
+}
+
+.user-icon {
+  border: 1px solid #e3e3e3;
+  height: 2rem;
+  width: 2rem;
+  border-radius: 50%;
+  background-color: #f1f1f1;
+  line-height: 1.9rem;
+  color: #bbbbbb;
 }
 </style>

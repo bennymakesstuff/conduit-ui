@@ -10,7 +10,7 @@
         </div>
         <div class="center"></div>
         <div class="controls">
-          <Button v-if="viewEdit" :label="editModeButton" class="button-set p-m-1 p-button-sm" @click="toggleEdit"/>
+          <Button v-if="viewEdit && checkPermission('user:update')" :label="editModeButton" class="button-set p-m-1 p-button-sm" @click="toggleEdit"/>
           <Button v-if="!viewEdit" label="Create" class="button-set p-m-1 p-button-sm" @click="saveUser"/>
           <Button label="Back to List" class="button-set p-m-1 p-button-sm" @click="close"/>
         </div>
@@ -19,7 +19,7 @@
       <div class="p-grid">
         <div class="general-info p-p-0 grid-item">
           <div class="grid-item-title">
-            General Details
+
           </div>
           <div class="grid-item-inner">
             <div class="profile-picture-area">
@@ -51,7 +51,9 @@
           </div>
         </div>
 
-        <div class="general-info p-p-0 grid-item" v-if="!viewEdit">
+
+        <!-- GENERAL INFORMATION WIDGET -->
+        <div class="general-info p-p-0 grid-item" v-if="!viewEdit && checkPermission('user:update')">
           <div class="grid-item-title">
             New User's Password
           </div>
@@ -71,9 +73,10 @@
                 placeholder="Password" />
           </div>
         </div>
+        <!-- GENERAL INFORMATION WIDGET -->
 
-
-        <div class="general-info p-p-0 grid-item" v-if="viewEdit">
+        <!-- PASSWORDS & SECURITY WIDGET -->
+        <div class="general-info p-p-0 grid-item" v-if="viewEdit && (this.checkPermission('user:create') || this.checkPermission('user:update'))">
           <div class="grid-item-title">
             Passwords & Security
           </div>
@@ -85,25 +88,17 @@
                 placeholder="Password" />
           </div>
         </div>
+        <!-- PASSWORDS & SECURITY WIDGET -->
 
-        <div class="general-info p-p-0 grid-item" v-if="viewEdit">
-          <div class="grid-item-title">
-            Activity
-          </div>
-          <div class="grid-item-inner">
-
-          </div>
-        </div>
-
-
+        <!-- ROLES & PERMISSIONS WIDGET -->
           <div class="general-info p-p-0 grid-item" style="padding-bottom: 1rem;">
             <div class="grid-item-title">
               Roles & Permissions
               <Badge v-if="user.roles.length > 0" :value="user.roles.length" style="margin-left: 0.5rem; margin-top: 0.25rem;"></Badge>
             </div>
             <div class="grid-item-inner user-roles-widget">
-              <div>
-                <Dropdown class="available-roles" :options="viewableRoles" optionLabel="title" placeholder="Add a Role" :filter="true" filterPlaceholder="Search Roles">
+              <div v-if="!editMode" style="display: block;">
+                <Dropdown :disabled="editMode" class="available-roles" :options="viewableRoles" optionLabel="title" placeholder="Add a Role" :filter="true" filterPlaceholder="Search Roles">
                   <template #loading>
                     <div>
                       <span>Loading Roles</span>
@@ -149,7 +144,7 @@
                     </Column>
 
 
-                    <Column field="active" header="" style="width: auto;text-align:center;">
+                    <Column v-if="!editMode" field="active" header="" style="width: auto;text-align:center;">
                       <template #body="slotProps">
                         <button class="p-button-xs" style="cursor: pointer;padding: 0.3rem !important;">
                           <i class="pi pi-trash" style="font-size: 0.8rem;" @click="removeRoleFromUser(slotProps.data.uuid)"></i>
@@ -163,10 +158,24 @@
               </div>
             </div>
           </div>
+        <!-- ROLES & PERMISSIONS WIDGET -->
+
+        <!-- ACTIVITY WIDGET -->
+        <div class="general-info p-p-0 grid-item" v-if="viewEdit">
+          <div class="grid-item-title">
+            Activity
+          </div>
+          <div class="grid-item-inner">
+
+          </div>
+        </div>
+        <!-- ACTIVITY WIDGET -->
 
 
 
-    </div>
+
+
+      </div>
 
 
     <div class="general-info p-m-2">
@@ -183,7 +192,6 @@
 </template>
 
 <script>
-import {FilterMatchMode,FilterOperator} from 'primevue/api';
 import {$axios as $http} from "@/axios";
 
 export default {
@@ -197,7 +205,7 @@ export default {
         title: 'New User',
         description: 'Create a new user',
       },
-      edit_mode: true,
+      edit_mode: false,
       user: {
         uuid: null,
         firstname: '',
@@ -227,7 +235,7 @@ export default {
       return !(this.edit_mode && this.viewEdit);
     },
     editModeButton: function() {
-      return (this.editMode) ? 'Edit User' : 'View User';
+      return (this.editMode) ? 'Edit User' : 'Save User';
     },
     pageTitle: function() {
       if (this.$route.name === this.route.createName) {

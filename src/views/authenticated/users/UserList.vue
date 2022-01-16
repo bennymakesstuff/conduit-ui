@@ -10,7 +10,7 @@
         <div class="center"></div>
         <div class="controls">
           <div>
-            <Button label="Create User" @click="navigateTo('user-create')" class="p-button-sm" />
+            <Button v-if="checkPermission('user:create')" label="Create User" @click="navigateTo('user-create')" class="p-button-sm" />
           </div>
         </div>
       </div>
@@ -54,9 +54,13 @@
           <Column field="email" header="Email Address" :sortable="true"></Column>
           <Column field="phone" header="Phone" :sortable="true"></Column>
 
-          <Column field="active" header="" style="width: 5rem; text-align:center;">
+          <Column field="active" header="" style="width: 6rem; text-align:center;">
             <template #body="slotProps">
-              <button label="Edit" class="p-button-xs" @click="navigateTo('user-view', {userid: slotProps.data.uuid} )">
+              <button v-if="checkPermission('user:view') && !checkPermission('user:update')" label="View" class="p-button-xs" @click="navigateTo('user-view', {userid: slotProps.data.uuid})">
+                <i class="pi pi-eye"></i>
+                <p>View</p>
+              </button>
+              <button v-if="checkPermission('user:update')" label="Edit" class="p-button-xs" @click="navigateTo('user-view', {userid: slotProps.data.uuid})">
                 <i class="pi pi-pencil"></i>
                 <p>Edit</p>
               </button>

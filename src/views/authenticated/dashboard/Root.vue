@@ -9,7 +9,6 @@
         <div class="center"></div>
         <div class="controls">
           <div>
-            <Button label="Create Role" @click="navigateTo('role-create')" class="p-button-sm" />
           </div>
         </div>
       </div>
