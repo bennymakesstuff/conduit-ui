@@ -22,15 +22,32 @@
             General Details
           </div>
           <div class="grid-item-inner">
-            <div class="left">
-              <InputText class="p-m-1 p-inputtext-sm" :disabled="editMode" v-model="user.firstname" placeholder="Given Name" />
-              <InputText class="p-m-1 p-inputtext-sm" :disabled="editMode" v-model="user.lastname" placeholder="Surname" />
+            <div class="profile-picture-area">
+              <div class="profile-picture"></div>
             </div>
-            <div class="right">
-              <InputText class="p-m-1 p-inputtext-sm" :disabled="editMode" v-model="user.email" placeholder="Email Address" />
-              <InputMask mask="(99)99 999 999" class="p-m-1 p-inputtext-sm" :disabled="editMode" v-model="user.phone" placeholder="Phone" />
-              <!--<InputText class="p-m-1 p-inputtext-sm" :disabled="editMode" v-model="user.phone" placeholder="Phone" />-->
-            </div>
+            <div class="details-area">
+              <div>
+                <span class="p-float-label">
+                    <InputText class="p-m-1 p-inputtext-sm" :disabled="editMode" v-model="user.firstname" id="firstname" />
+                    <label for="firstname">Given Name</label>
+                </span>
+                <span class="p-float-label">
+                    <InputText class="p-m-1 p-inputtext-sm" :disabled="editMode" v-model="user.lastname" id="surname" />
+                    <label for="surname">Surname</label>
+                </span>
+              </div>
+              <div>
+                <span class="p-float-label">
+                    <InputText class="p-m-1 p-inputtext-sm" :disabled="editMode" v-model="user.email" id="email-address" />
+                    <label for="email-address">Email Address</label>
+                </span>
+                <span class="p-float-label">
+                    <InputMask mask="(99)99 999 999" class="p-m-1 p-inputtext-sm" :disabled="editMode" v-model="user.phone" id="phone" />
+                    <label for="phone">Phone Number</label>
+                </span>
+              </div>
+          </div>
+
           </div>
         </div>
 
@@ -376,6 +393,7 @@ export default {
   margin-bottom: 2rem;
 }
 
+
 .general-info {
   margin: 0;
   position: relative;
@@ -397,13 +415,18 @@ export default {
 
   .grid-item-inner {
     padding: 0.5rem !important;
-    text-align: center;
-    display: flex;
 
     > div {
-      flex: 1;
+      vertical-align: top;
+      display: inline-block;
       padding: 0.5rem;
     }
+
+    > .details-area {
+      min-width: 20rem;
+    }
+    > .name-details {}
+    > .contact-details {}
 
   }
 
@@ -460,5 +483,24 @@ export default {
 }
 
 .p-dropdown-item:has(> .role-option) {background-color: pink !important;}
+
+
+.profile-picture-area {
+  padding: 1rem;
+  margin: 0;
+  width: auto;
+  min-width: 8rem;
+  //border: 1px solid green;
+  display: inline-block;
+  vertical-align: top;
+
+  > .profile-picture {
+    background-color: #f5f5f5;
+    border-radius: 50%;
+    height: 8rem;
+    width: 8rem;
+    border: 1px solid #e3e3e3;
+  }
+}
 
 </style>

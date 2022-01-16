@@ -33,6 +33,7 @@ import Dropdown from 'primevue/dropdown';
 import Badge from 'primevue/badge';
 import InputMask from 'primevue/inputmask';
 import Avatar from 'primevue/avatar';
+import {indexOf} from "core-js/internals/array-includes";
 
 // Application Settings
 const ROUTE_REHYDRATION = true; // Turn this off for production
@@ -169,6 +170,28 @@ app.mixin({
       else {
         return `${day}/${month}/${date.getFullYear()}`;
       }
+    },
+
+    /**
+     * Returns if the user has a permission
+     * @param permission
+     * @returns {boolean}
+     */
+    checkPermission: function(permission) {
+
+      console.log('LOOKING FOR PERMISSION: ' + permission);
+      let user = this.$store.getters.getUser;
+      console.log(user);
+
+      // Return false if a user doesnt exist
+      if (user === null || !user.hasOwnProperty('permissions')) {
+        console.log('DOES NOT HAVE PERMISSION');
+        return false;
+      }
+
+      console.log('SHOULD HAVE PERMISSION');
+      //let position = (user.permissions.indexOf(permission) > 0)
+      return (user.permissions.indexOf(permission) !== -1);
     }
 
   }

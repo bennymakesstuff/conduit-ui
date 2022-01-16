@@ -4,8 +4,8 @@
     <div v-if="$route.name===route.name" class="">
       <div class="route-header">
         <div class="details">
-          <h1 class="route-title">{{ route.title }}</h1>
-          <p class="route-description">{{ route.description }}</p>
+          <h1 class="route-title">{{ user.firstname }} {{user.lastname}}</h1>
+          <p class="route-description"></p>
         </div>
       </div>
     </div>

@@ -8,15 +8,15 @@
       <NavMenuItem @click="navigateTo('dashboard')" link="users" title="Dashboard" icon="I">
         <i class="pi pi-th-large"></i>
       </NavMenuItem>
-      <NavMenuItem @click="navigateTo('user')" link="users" title="User" icon="I">
+      <NavMenuItem @click="navigateTo('user')" link="users" :title="username" icon="I">
         <i class="pi pi-user"></i>
       </NavMenuItem><NavMenuItem @click="navigateTo('users')" link="users" title="Users" icon="I">
         <i class="pi pi-users"></i>
       </NavMenuItem>
-      <NavMenuItem @click="navigateTo('roles')" link="roles" title="Roles" icon="I">
+      <NavMenuItem v-if="checkPermission('roles:view')" @click="navigateTo('roles')" link="roles" title="Roles" icon="I">
         <i class="pi pi-briefcase"></i>
       </NavMenuItem>
-      <NavMenuItem @click="navigateTo('permissions')" link="permissions" title="Permissions" icon="I">
+      <NavMenuItem v-if="checkPermission('permissions:view')" @click="navigateTo('permissions')" link="permissions" title="Permissions" icon="I">
         <i class="pi pi-unlock"></i>
       </NavMenuItem>
       <NavMenuItem @click="navigateTo('app_settings')" link="app_settings" title="App Settings" icon="I">
@@ -40,6 +40,20 @@ export default {
   },
   props: {
     msg: String
+  },
+  mounted() {
+
+  },
+  computed: {
+    username: function() {
+      if (this.$store.getters.getUser !== null) {
+        let user = this.$store.getters.getUser;
+        return user.firstname;
+      }
+      else {
+        return 'Your Account';
+      }
+    }
   },
   methods: {
     toggleWidth: function() {

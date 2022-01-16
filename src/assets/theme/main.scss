@@ -126,6 +126,8 @@ html, body {
 .p-inputtext-sm {
   padding: 0.35rem 0.45rem !important;
   outline: none !important;
+  width: 100%;
+  margin-bottom: 1.25rem !important;
 }
 
 .p-inputtext-sm:hover {
@@ -204,4 +206,15 @@ h1 { font-weight: 400; }
   margin-bottom: 0rem !important;
   margin-top: 0.3rem;
   line-height: 1.32rem;
+}
+
+// Label Overrides
+.p-float-label input:focus ~ label, .p-float-label input.p-filled ~ label, .p-float-label textarea:focus ~ label, .p-float-label textarea.p-filled ~ label, .p-float-label .p-inputwrapper-focus ~ label, .p-float-label .p-inputwrapper-filled ~ label {
+  top: 0.35rem;
+  font-size: 12px;
+  left: 0.5rem;
+}
+
+.p-float-label label {
+  margin-top: -1rem;
 }
