@@ -25,13 +25,13 @@
             <div class="profile-picture-area">
               <div class="profile-picture"></div>
             </div>
-            <div class="details-area">
+            <div class="details-area" style="padding-right: 1rem;">
               <div>
-                <span class="p-float-label">
+                <span class="p-float-label" style="width: calc(50% - 0.5rem); display: inline-block; margin-right: 1rem;">
                     <InputText class="p-m-1 p-inputtext-sm" :disabled="editMode" v-model="user.firstname" id="firstname" />
                     <label for="firstname">Given Name</label>
                 </span>
-                <span class="p-float-label">
+                <span class="p-float-label" style="width: calc(50% - 0.5rem);display: inline-block;">
                     <InputText class="p-m-1 p-inputtext-sm" :disabled="editMode" v-model="user.lastname" id="surname" />
                     <label for="surname">Surname</label>
                 </span>
