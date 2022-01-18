@@ -9,8 +9,8 @@ export const role_routes = [
     component: () => import(/* webpackChunkName: "user" */ '@/views/authenticated/roles/RoleCreate.vue')
   },
   {
-    path: "edit",
-    name: "role-edit",
+    path: ":roleid",
+    name: "role-view",
     component: () => import(/* webpackChunkName: "user" */ '@/views/authenticated/roles/RoleCreate.vue')
   },
 ]

@@ -19,12 +19,12 @@
 
     <div class="general-info p-m-2">
       <div class="left">
-        <InputText class="p-m-1 p-col-12 p-inputtext-sm" v-model="new_role.identifier" placeholder="Identifier" />
-        <InputText class="p-m-1 p-col-12 p-inputtext-sm" v-model="new_role.title" placeholder="Title" />
-        <InputText class="p-m-1 p-col-12 p-inputtext-sm" v-model="new_role.description" placeholder="Description" />
+        <InputText class="p-m-1 p-col-12 p-inputtext-sm" v-model="role.identifier" placeholder="Identifier" />
+        <InputText class="p-m-1 p-col-12 p-inputtext-sm" v-model="role.title" placeholder="Title" />
+        <InputText class="p-m-1 p-col-12 p-inputtext-sm" v-model="role.description" placeholder="Description" />
       </div>
       <div class="right">
-        <InputText class="p-m-1 p-col-12 p-inputtext-sm" v-model="new_role.group" placeholder="Role Group" />
+        <InputText class="p-m-1 p-col-12 p-inputtext-sm" v-model="role.group" placeholder="Role Group" />
 
       </div>
     </div>
@@ -70,7 +70,6 @@
 </template>
 
 <script>
-import {FilterMatchMode,FilterOperator} from 'primevue/api';
 import {$axios as $http} from "@/axios";
 
 export default {
@@ -81,15 +80,15 @@ export default {
       route: {
         name: 'role-create',
         createName: 'role-create',
-        editName: 'role-edit',
+        editName: 'role-view',
         title: '',
-        description: 'Create a new role',
+        description: '',
       },
       selected_group: null,
       activeIndex: 0,
       show_identifier: false,
       toggle_group: [],
-      new_role: {
+      role: {
         identifier: '',
         title: '',
         description: '',
@@ -124,14 +123,35 @@ export default {
         return 'Edit Role'
       }
       return 'Issue Found'
-    }
+    },
+    viewEdit: function() {
+      return (this.$route.name === this.route.editName)
+    },
   },
   mounted() {
+    // Only run these methods if in user "Edit" mode
     this.getPermissionGroups();
     this.getPermissions();
   },
   methods: {
+    updatePermissionsStateFromLoadedData: function() {
+      for (let i = 0; i < this.role.permissions.length; i++) {
+        let index = this.permissions.findIndex((el) => el.identifier === this.role.permissions[i]);
+        if (index !== -1) {
+          this.permissions[index].enabled = true;
+        }
+      }
 
+      // TODO: Get check for all toggles on working correctly
+      // for (let i = 0; i < this.role.permissions.length; i++) {
+      //   let index = this.permissions.findIndex((el) => el.identifier === this.role.permissions[i]);
+      //   if (index !== -1) {
+      //     let permission = this.permissions[index];
+      //     this.checkAllTogglesEnabled(permission.uuid);
+      //   }
+      // }
+
+    },
     checkAllTogglesEnabled: function(uuid) {
       let all_on_flag = true;
 
@@ -172,9 +192,32 @@ export default {
         permissions_to_change[i].enabled = new_status;
       }
 
-      //
       this.generatePermissionSet();
     },
+
+    /**
+     * Retrieves data for a single role
+     * @returns {Promise<void>}
+     */
+    getRoleDetails: async function() {
+      try {
+        let response = await $http.get(this.$store.state.api + 'roles/' + this.role.uuid);
+        let data = response.data;
+
+        if (data.status === false) {
+          console.log('%cCould not retrieve role details', "color:red");
+          console.log('%cMessage: %c' + data.message, "color:red", "color:black");
+        }
+
+        this.role = data.role;
+        this.updatePermissionsStateFromLoadedData();
+      }
+      catch (error) {
+        console.log('%cCould not retrieve role details', "color:red");
+        console.log(error);
+      }
+    },
+
     /**
      * Retrieves a list of all permission groups
      * @returns {Promise<void>}
@@ -224,6 +267,15 @@ export default {
         }
 
         this.permissions = data.permissions;
+
+        // Get the roles data if in edit mode
+        if (this.viewEdit) {
+          this.role.uuid = this.$route.params.roleid;
+
+          // Load the role details and save into role
+          await this.getRoleDetails();
+        }
+
       }
       catch (error) {
         console.log('%cCould not retrieve permissions', "color:red");
@@ -237,7 +289,7 @@ export default {
      */
     saveRole: async function() {
       try {
-        console.log(this.new_role);
+        console.log(this.role);
         let response = await $http.post(this.$store.state.api + 'roles/create', {'new_role': this.new_role});
         let data = response.data;
 
@@ -257,7 +309,7 @@ export default {
           this.$toast.add({
             severity: 'success',
             summary: 'New Role Created',
-            detail: `The role "${this.new_role.title}" has been created.`,
+            detail: `The role "${this.role.title}" has been created.`,
             life: 3000,
             styleClass: 'compact-toast'
           });
@@ -294,7 +346,7 @@ export default {
       }
 
       // Save permissions to new role
-      this.new_role.permissions = allowed_permissions;
+      this.role.permissions = allowed_permissions;
       return allowed_permissions;
     },
 

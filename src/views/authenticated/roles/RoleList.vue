@@ -51,7 +51,7 @@
 
           <Column field="active" header="" style="width: 5rem;text-align:center;">
             <template #body="slotProps">
-              <button label="Edit" class="p-button-xs">
+              <button v-if="checkPermission('roles:update')" label="Edit" class="p-button-xs" @click="navigateTo('role-view', {roleid: slotProps.data.uuid})">
                 <i class="pi pi-pencil"></i>
                 <p>Edit</p>
               </button>
