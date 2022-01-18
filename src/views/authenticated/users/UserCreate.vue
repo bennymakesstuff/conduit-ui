@@ -389,41 +389,54 @@ export default {
         console.log(error);
       }
     },
-    addRoleToUser: async function(uuid) {
-      console.log('Adding Role to User');
+
+
+    addRoleToUser: async function(uuid, update_ui_only = false) {
       let role = this.available_roles.find(element => element.uuid === uuid);
-      console.log(role);
       if (role) {
-        role.active_from = this.humanDate(Date.now());
+        let date = new Date();
+        role.active_from = date.toISOString();
         this.user.roles.push(role);
         this.selected_role = null;
 
-        try {
-          let response = await $http.post(this.$store.state.api + 'users/add-role', {
-            'user': this.user.uuid,
-            'role': uuid
-          });
-          let data = response.data;
+        // Do this by default, otherwise only update the list in the UI
+        if (update_ui_only !== true) {
+          try {
+            let response = await $http.post(this.$store.state.api + 'users/add-role', {
+              'user': this.user.uuid,
+              'role': uuid
+            });
+            let data = response.data;
 
-          // Check status of login response
-          if (data.status === false) {
+            // Check status of login response
+            if (data.status === false) {
+              this.removeRoleFromUser(uuid);
+              console.log('%cCould not add role to the user', "color:red");
+              console.log('%cMessage: %c' + data.message, "color:red", "color:black");
+            }
+
+            this.$toast.add({
+              severity: 'success',
+              summary: 'User updated',
+              detail: `"Role added to ${this.user.firstname}".`,
+              life: 3000,
+              styleClass: 'compact-toast'
+            });
+
+          } catch (error) {
             this.removeRoleFromUser(uuid);
             console.log('%cCould not add role to the user', "color:red");
-            console.log('%cMessage: %c' + data.message, "color:red", "color:black");
+            console.log(error);
           }
-
         }
-        catch (error) {
-          this.removeRoleFromUser(uuid);
-          console.log('%cCould not add role to the user', "color:red");
-          console.log(error);
-        }
-
       }
     },
+
+
     removeRoleFromUser: async function(uuid) {
       // TODO: Get is function working properly. (Need to not delete the record but deactivate it)
       // TODO:   This is for history purposes. Should have a record of what roles peoples have had and when
+      this.user.roles.splice(this.user.roles.findIndex(item => item.uuid === uuid), 1);
       try {
         let response = await $http.post(this.$store.state.api + 'users/remove-role', {
           'user': this.user.uuid,
@@ -433,16 +446,22 @@ export default {
 
         // Check status of login response
         if (data.status === false) {
-          this.removeRoleFromUser(uuid);
-          console.log('%cCould not retrieve roles', "color:red");
+          this.addRoleToUser(uuid, true);
+          console.log('%cCould not remove role', "color:red");
           console.log('%cMessage: %c' + data.message, "color:red", "color:black");
         }
 
-        this.user.roles.splice(this.user.roles.findIndex(item => item.uuid === uuid), 1);
+        this.$toast.add({
+          severity: 'success',
+          summary: 'User updated',
+          detail: `"Role removed from ${this.user.firstname}".`,
+          life: 3000,
+          styleClass: 'compact-toast'
+        });
       }
       catch (error) {
-        this.removeRoleFromUser(uuid);
-        console.log('%cCould not retrieve roles', "color:red");
+        this.addRoleToUser(uuid, true);
+        console.log('%cCould not remove role', "color:red");
         console.log(error);
       }
 

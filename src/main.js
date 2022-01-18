@@ -34,6 +34,7 @@ import Badge from 'primevue/badge';
 import InputMask from 'primevue/inputmask';
 import Avatar from 'primevue/avatar';
 import {indexOf} from "core-js/internals/array-includes";
+import {toArray} from "core-js/internals/async-iterator-iteration";
 
 // Application Settings
 const ROUTE_REHYDRATION = true; // Turn this off for production
@@ -186,7 +187,9 @@ app.mixin({
         return false;
       }
 
-      return (user.permissions.indexOf(permission) !== -1);
+      let permissions = Object.values(user.permissions)
+
+      return permissions.includes(permission);
     }
 
   }

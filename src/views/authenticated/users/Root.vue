@@ -2,7 +2,7 @@
   <div class="outer-content">
 
     <router-view v-if="$route.name!==route.name"></router-view>
-    <UserList v-if="$route.name===route.name"></UserList>
+    <UserList ref="user-list" v-if="$route.name===route.name"></UserList>
 
   </div>
 </template>
