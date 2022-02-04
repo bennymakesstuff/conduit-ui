@@ -1,3 +1,14 @@
+// -- DASHBOARD --
+.dash-grid-item {
+  background-color: var(--dash-grid-item) !important;
+  box-shadow: var(--dash-grid-item-shadow) !important;
+
+
+  > .stat-text {
+    color: var(--dash-grid-item-text) !important;
+  }
+}
+
 .general-info {
   margin: 0;
   position: relative;

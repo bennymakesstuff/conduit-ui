@@ -33,6 +33,11 @@
   --grid-item-border: var(--menu-border);
   --grid-item-title: var(--toggle-background);
 
+  // -- DASH-GRID-ITEM --
+  --dash-grid-item: var(--menu-bg);
+  --dash-grid-item-shadow: none;
+  --dash-grid-item-text: #aeaeae;
+
   // -- TABLES --
   --datatabble-bg: #f8f9fa;
   --datatable-bg-color: #4f5256;
