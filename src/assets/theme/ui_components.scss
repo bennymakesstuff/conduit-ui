@@ -1,0 +1,44 @@
+.general-info {
+  margin: 0;
+  position: relative;
+  vertical-align: top;
+}
+
+
+.grid-item {
+  background-color: var(--grid-item-bg);
+  margin: 0.4rem 0.5rem;
+  border: 1px solid var(--grid-item-border);
+  vertical-align: top;
+  max-height: 20rem;
+
+  .grid-item-title {
+    width: 100%;
+    min-height: 2rem;
+    border-radius: 0;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    padding: 0.2rem 0.8rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--grid-item-title);
+  }
+
+  .grid-item-inner {
+    padding: 0.5rem !important;
+
+    > div {
+      vertical-align: top;
+      display: inline-block;
+      padding: 0.5rem;
+    }
+
+    > .details-area {
+      min-width: 20rem;
+    }
+    > .name-details {}
+    > .contact-details {}
+
+  }
+}
+

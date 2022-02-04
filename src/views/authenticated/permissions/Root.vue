@@ -39,13 +39,15 @@
         <template #loading>
           Loading customers data. Please wait.
         </template>
+        <Column field="permission_group.title" header="Permission Group" :sortable="true" style="width: 10rem !important;"></Column>
+
+        <!--
         <Column field="active" header="Active" style="width: 1rem;text-align:center;" :sortable="true">
           <template #body="slotProps">
             <InputSwitch v-model="slotProps.data.active" class="record-toggle"/>
           </template>
         </Column>
-
-        <Column field="permission_group.title" header="Permission Group" :sortable="true" style="width: 10rem !important;"></Column>
+        -->
 
         <Column field="identifier" header="Identifier" :sortable="true" style="width: 10rem !important;"></Column>
 

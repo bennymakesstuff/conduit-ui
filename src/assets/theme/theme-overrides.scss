@@ -1,0 +1,69 @@
+// This file overrides styles provided by the PrimeVue library.
+
+// -- TABLES --
+.p-datatable {
+  border-color: var(--datatable-bg-color) !important;
+}
+
+.p-datatable .p-datatable-header {
+  background-color: var(--datatable-bg-color) !important;
+  color: var(--datatable-text-color) !important;
+  border: var(--datatable-border) !important;
+}
+
+.p-datatable .p-datatable-footer {
+  background-color: var(--datatable-bg-color) !important;
+  color: var(--datatable-text-color) !important;
+  border: var(--datatable-border) !important;
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+  border: var(--datatable-hr-border) !important;
+  border-width: 0 0 1px 0;
+  font-weight: 700;
+  color: var(--datatable-hr-color) !important;
+  background: var(--datatable-hr-bg) !important;
+  transition: box-shadow 0.2s;
+}
+
+.p-column-title {
+  color: var(--datatable-hr-color) !important;
+}
+
+.p-sortable-column-icon {
+  color: var(--datatable-hr-color) !important;
+}
+
+.p-datatable .p-datatable-tfoot > tr > td {
+  border: var(--datatable-hr-border) !important;
+  border-width: 0 0 1px 0;
+  font-weight: 700;
+  color: var(--datatable-rows-text-color) !important;
+  background: var(--datatable-bg-color) !important;
+}
+
+.p-datatable .p-datatable-tbody > tr > td {
+  background-color: var(--datatable-rows-bg) !important;
+  color: var(--datatable-text-color) !important;
+  border: var(--datatable-rows-border) !important;
+}
+
+
+// -- TEXT BOXES --
+.p-inputtext {
+  background-color: var(--textbox-bg-color) !important;
+  border: var(--textbox-border) !important;
+  color: var(--textbox-color) !important;
+}
+
+.p-inputtext ~ label {
+  color: var(--textbox-color) !important;
+}
+
+
+// -- BUTTONS --
+.p-button {
+  color: var(--button-text);
+  background: var(--button-bg);
+  border: var(--button-border);
+}

@@ -31,6 +31,9 @@
       <NavMenuItem @click="toggleWidth" title="" icon="I">
         <i :class="[{'rotate-180': $store.getters.getNavigationSize}, 'menu-size-toggle', 'pi', 'pi-angle-left']"></i>
       </NavMenuItem>
+      <NavMenuItem @click="toggleTheme" title="Theme" icon="I">
+        T
+      </NavMenuItem>
   </div>
 </template>
 
@@ -80,10 +83,10 @@ export default {
 
 .navigation {
   width: 100%;
-  color: #333333;
+  color: var(--primary-text);
   text-align: left;
   height: 100vh;
-  background: #ffffff;
+  background: var(--menu-bg);
   transition: width 120ms ease;
   overflow: hidden;
   white-space: nowrap;
@@ -97,6 +100,7 @@ export default {
     min-height: 3rem;
     line-height: 3rem;
     font-size: 1.5rem;
+    color: var(--logo-text-color);
   }
 }
 
@@ -105,12 +109,12 @@ export default {
 }
 
 .user-icon {
-  border: 1px solid #e3e3e3;
+  border: 1px solid var(--user-icon-border);
   height: 2rem;
   width: 2rem;
   border-radius: 50%;
-  background-color: #f1f1f1;
+  background-color: var(--user-icon-bg);
   line-height: 1.9rem;
-  color: #bbbbbb;
+  color: var(--user-icon-text);
 }
 </style>

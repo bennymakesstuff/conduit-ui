@@ -30,9 +30,9 @@ export default {
   height: 3.5rem;
   line-height: 3.5rem;
   text-align: center;
-  border-bottom: 1px solid #eeeeee;
+  border-bottom: 1px solid var(--menu-border);
   cursor: pointer;
-  color: rgb(21, 96, 173);
+  color: var(--navitem-text);
   font-weight: 500;
   font-size: 0.9rem;
   margin: 0;
@@ -55,6 +55,7 @@ export default {
           line-height: 2rem;
           text-align: center;
           transition: margin-left 100ms ease;
+          color: var(--navitem-icon);
 
     > i {
       vertical-align: top;
