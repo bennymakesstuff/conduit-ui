@@ -48,6 +48,22 @@
   border: var(--datatable-rows-border) !important;
 }
 
+// -- TOGGLES --
+.p-inputswitch  {
+  > span { background-color: var(--toggle-background-inactive);}
+}
+
+.p-inputswitch-checked {
+  > span { background-color: var(--toggle-background-active);}
+}
+
+.p-inputswitch-checked:hover {
+  > span { background-color: var(--toggle-background-active)}
+}
+
+.p-inputswitch:hover  {
+  > span { background-color: var(--toggle-background-inactive);}
+}
 
 // -- TEXT BOXES --
 .p-inputtext {
@@ -63,7 +79,13 @@
 
 // -- BUTTONS --
 .p-button {
-  color: var(--button-text);
-  background: var(--button-bg);
-  border: var(--button-border);
+  color: var(--button-text) !important;
+  background: var(--button-bg) !important;
+  border: var(--button-border) !important;
+}
+
+.p-button-xs {
+  color: var(--button-text) !important;
+  background: var(--button-bg) !important;
+  border: var(--button-border) !important;
 }

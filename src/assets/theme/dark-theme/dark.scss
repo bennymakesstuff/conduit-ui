@@ -2,6 +2,7 @@
   --bg-color: #323438;
   --menu-bg: #4f5256;
   --inner-content-pane-bg: #f9f9f9;
+  --focus-ring: 0 0 0 0.2rem transparent;
 
   // Borders
   --menu-border: #4e4e4e;
@@ -17,8 +18,6 @@
 
 
   // UI Components
-  // -- TOGGLES --
-  --toggle-background: #1586d5;
 
   // -- BUTTONS --
   --primary-button-color: #1586d5;
@@ -59,7 +58,11 @@
 
   // -- BUTTON --
   --button-text: #ffffff;
-  --button-bg: #8a62b2;
-  --border: var(--toggle-background);
+  --button-bg: #68a453;
+  --border: var(--toggle-background-active);
+
+  // -- TOGGLES --
+  --toggle-background-active: #1586d5;
+  --toggle-background-inactive: #4d4d4d;
 
 }

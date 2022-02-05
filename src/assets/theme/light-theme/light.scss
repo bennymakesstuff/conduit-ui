@@ -62,7 +62,10 @@
 
   // -- BUTTON --
   --button-text: #ffffff;
-  --button-bg: var(--toggle-background);
-  --border: var(--toggle-background);
+  --button-bg: #68a453;
+
+  // -- TOGGLES --
+  --toggle-background-active: #1586d5;
+  --toggle-background-inactive: #4d4d4d;
 
 }
