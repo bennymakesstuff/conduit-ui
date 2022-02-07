@@ -289,8 +289,7 @@ export default {
      */
     saveRole: async function() {
       try {
-        console.log(this.role);
-        let response = await $http.post(this.$store.state.api + 'roles/create', {'new_role': this.new_role});
+        let response = await $http.post(this.$store.state.api + 'roles/create', {'new_role': this.role});
         let data = response.data;
 
         // Send request to create new role

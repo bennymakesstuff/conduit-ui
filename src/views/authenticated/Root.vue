@@ -39,7 +39,7 @@ $navigation_width_compact: 4rem;
   min-height: 100vh;
   text-align: left;
   font-size: 0;
-  background-color: #ffffff;
+  background-color: var(--bg-color);
   position: relative;
 
   .content-pane {
@@ -49,7 +49,7 @@ $navigation_width_compact: 4rem;
     display: inline-block;
     min-height: 100vh;
     font-size: 1rem;
-    background-color: $inner_content_pane_color;
+    background-color: var(--bg-color);
     z-index: 9;
     height: 100vh;
     position: relative;
@@ -59,7 +59,7 @@ $navigation_width_compact: 4rem;
       overflow: scroll;
       width: 100%;
       background-color: transparent;
-      border-left: 1px solid #eaeaea;
+      border-left: 1px solid var(--menu-border);
     }
   }
 

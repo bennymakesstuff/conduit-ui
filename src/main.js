@@ -178,7 +178,7 @@ app.mixin({
      * @param permission
      * @returns {boolean}
      */
-    checkPermission: function(permission) {
+    checkPermission: function (permission) {
 
       let user = this.$store.getters.getUser;
 
@@ -190,6 +190,43 @@ app.mixin({
       let permissions = Object.values(user.permissions)
 
       return permissions.includes(permission);
+    },
+
+    /**
+     * @param len
+     * @returns {string}
+     */
+    generateStrongPassword: function (len = 20) {
+      var string = "abcdefghijklmnopqrstuvwxyz"; //to upper
+      var numeric = '0123456789';
+      var punctuation = '!@#$%^&*_+~|}{[]?><,./-=';
+      var password = "";
+      var character = "";
+      while( password.length < len ) {
+        var entity1 = Math.ceil(string.length * Math.random() * Math.random());
+        var entity2 = Math.ceil(numeric.length * Math.random() * Math.random());
+        var entity3 = Math.ceil(punctuation.length * Math.random() * Math.random());
+
+        var hold = string.charAt( entity1 );
+        var hold2 = (password.length % 2 === 0) ? (hold.toUpperCase()) : (hold);
+
+        character += hold2;
+        character += numeric.charAt( entity2 );
+        character += punctuation.charAt( entity3 );
+        password = character;
+      }
+
+      password=password.split('').sort(function(){return 0.5-Math.random()}).join('');
+      return password.substr(0,len);
+    },
+
+    toggleTheme: function() {
+      let documentClassList = document.documentElement.classList;
+      if (documentClassList.contains('dark')) {
+        documentClassList.remove('dark');
+      } else {
+        documentClassList.add('dark');
+      }
     }
 
   }

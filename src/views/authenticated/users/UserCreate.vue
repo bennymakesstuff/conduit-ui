@@ -10,9 +10,9 @@
         </div>
         <div class="center"></div>
         <div class="controls">
-          <Button v-if="viewEdit && checkPermission('user:update')" :label="editModeButton" class="button-set p-m-1 p-button-sm" @click="toggleEdit"/>
-          <Button v-if="!viewEdit" label="Create" class="button-set p-m-1 p-button-sm" @click="saveUser('create')"/>
-          <Button label="Back to List" class="button-set p-m-1 p-button-sm" @click="close"/>
+          <Button v-if="viewEdit && checkPermission('user:update')" :label="editModeButton" class="p-m-1 p-button-sm" @click="toggleEdit"/>
+          <Button v-if="!viewEdit" label="Create" class="p-m-1 p-button-sm" @click="saveUser('create')"/>
+          <Button label="Back to List" class="p-m-1 p-button-sm" @click="close"/>
         </div>
       </div>
 
@@ -23,7 +23,10 @@
           </div>
           <div class="grid-item-inner">
             <div class="profile-picture-area">
-              <div class="profile-picture"></div>
+              <div class="profile-picture">
+                <div v-if="hasProfileImage" class="profile-image"></div>
+                <div v-if="!hasProfileImage" class="profile-initials">BB</div>
+              </div>
             </div>
             <div class="details-area" style="padding-right: 1rem;">
               <div>
@@ -53,24 +56,33 @@
 
 
         <!-- GENERAL INFORMATION WIDGET -->
-        <div class="general-info p-p-0 grid-item" v-if="!viewEdit && checkPermission('user:update')">
-          <div class="grid-item-title">
-            New User's Password
-          </div>
-          <div class="grid-item-inner">
-            Send via Email?
-          </div>
-          <div class="grid-item-inner">
-            <button class="p-button-xs" style="cursor: pointer;padding: 0.3rem !important;">
-              Create a strong password
-            </button>
-          </div>
-          <div class="grid-item-inner">
-            <InputText
-                class="p-m-1 p-inputtext-sm"
-                :disabled="editMode"
-                v-model="user.password"
-                placeholder="Password" />
+        <div class="general-info p-p-0 grid-item" style="min-width: 5rem;" v-if="!viewEdit && checkPermission('user:update')">
+          <div class="p-p-1">
+            <div class="grid-item-title">
+              New User's Password
+            </div>
+            <div class="grid-item-inner">
+
+              <p>Send via Email?</p>
+              <div class="password">
+                <span class="p-float-label">
+                    <InputText
+                        class="p-m-0 p-inputtext-sm"
+                        :disabled="editMode"
+                        v-model="user.password"
+                        style="margin: 0;"
+                        id="password"/>
+                    <label for="password">Password</label>
+                </span>
+              </div>
+
+              <div class="p-d-block" style="margin-top: -0.75rem; float:right;">
+                <button class="p-button-xs" style="cursor: pointer;padding: 0.5rem !important;" @click="generatePassword">
+                  Generate Strong Password
+                </button>
+              </div>
+
+            </div>
           </div>
         </div>
         <!-- GENERAL INFORMATION WIDGET -->
@@ -91,7 +103,7 @@
         <!-- PASSWORDS & SECURITY WIDGET -->
 
         <!-- ROLES & PERMISSIONS WIDGET -->
-          <div class="general-info p-p-0 grid-item" style="padding-bottom: 1rem;">
+          <div class="general-info p-p-0 grid-item" style="padding-bottom: 1rem;"  v-if="viewEdit && checkPermission('user:update')">
             <div class="grid-item-title">
               Roles & Permissions
               <Badge v-if="user.roles.length > 0" :value="user.roles.length" style="margin-left: 0.5rem; margin-top: 0.25rem;"></Badge>
@@ -207,6 +219,7 @@ export default {
       },
       edit_mode: false,
       user: {
+        image: null,
         uuid: null,
         firstname: '',
         lastname: '',
@@ -216,7 +229,7 @@ export default {
         roles: []
       },
       available_roles: [],
-      selected_role: null
+      selected_role: null,
     }
   },
   computed: {
@@ -245,6 +258,9 @@ export default {
         return 'Edit User'
       }
       return 'Issue Found'
+    },
+    hasProfileImage: function() {
+      return this.user.image !== null;
     },
 
     /**
@@ -466,6 +482,11 @@ export default {
       }
 
     },
+
+    generatePassword: function() {
+      this.user.password = this.generateStrongPassword();
+    },
+
     close: function() {
       this.navigateTo('users');
     }
@@ -483,54 +504,6 @@ export default {
 .permission-table {
   margin-bottom: 2rem;
 }
-
-
-.general-info {
-  margin: 0;
-  position: relative;
-  vertical-align: top;
-
-  .grid-item-title {
-    width: 100%;
-    min-height: 2rem;
-    //border-bottom: 1px solid #e3e3e3;
-    border-radius: 0;
-    border-top-left-radius: 0.5rem;
-    border-top-right-radius: 0.5rem;
-    padding: 0.2rem 0.8rem;
-    font-size: 1rem;
-    font-weight: 500;
-    //color: #939393;
-    color: #4476b4;
-  }
-
-  .grid-item-inner {
-    padding: 0.5rem !important;
-
-    > div {
-      vertical-align: top;
-      display: inline-block;
-      padding: 0.5rem;
-    }
-
-    > .details-area {
-      min-width: 20rem;
-    }
-    > .name-details {}
-    > .contact-details {}
-
-  }
-
-}
-
-.grid-item {
-  background-color: #ffffff;
-  margin: 0.4rem 0.5rem;
-  border: 1px solid #e3e3e3;
-  vertical-align: top;
-  max-height: 20rem;
-}
-
 
 .user-roles-widget {
   display: block !important;
@@ -591,6 +564,30 @@ export default {
     height: 8rem;
     width: 8rem;
     border: 1px solid #e3e3e3;
+
+
+    > .profile-initials {
+      background-color: transparent;
+      width: 100%;
+      height: 100%;
+      font-weight: 300;
+      color: #b7b7b7;
+      text-align: center;
+      @include vertical-align(middle);
+      font-size: 4rem;
+    }
+  }
+}
+
+.password {
+  width: 100%;
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+
+  > span {
+    > .p-inputtext-sm {
+      margin-bottom: 0 !important;
+    }
   }
 }
 

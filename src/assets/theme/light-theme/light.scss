@@ -1,0 +1,76 @@
+:root {
+  // Backgrounds
+  --bg-color: #eaeaea;
+  --menu-bg: #ffffff;
+  --inner-content-pane-bg: #f9f9f9;
+
+  // Borders
+  --menu-border: #eeeeee;
+  --border-grey: '';
+
+  // Text
+  --primary-text: #333333;
+  --hightlight-text: #1560adff;
+  --logo-text-color: #333333;
+
+  --route-title: #707070;
+  --route-description: var(--route-title);
+
+
+  // UI Components
+  // -- MENU ITEMS --
+  --menuitem-text: '';
+  --menuitem-icon: red;
+
+  // -- TOGGLES --
+  --toggle-background: #1586d5;
+
+  // -- BUTTONS --
+  --primary-button-color: #1586d5;
+
+  // -- USER ICON --
+  --user-icon-bg: #f1f1f1;
+  --user-icon-border: #e3e3e3;
+  --user-icon-text: #bbbbbb;
+
+  // -- GRID ITEM --
+  --grid-item-bg: #ffffff;
+  --grid-item-border: #e3e3e3;
+  --grid-item-title: var(--toggle-background);
+
+  // -- DASH-GRID-ITEM --
+  --dash-grid-item: var(--menu-bg);
+  --dash-grid-item-shadow: none;
+  --dash-grid-item-text: #aeaeae;
+
+  // -- TABLES --
+  --datatabble-bg: #aeaeae;
+  --datatable-bg-color: #d0d0d0;
+  --datatable-text-color: #343a40;
+  --datatable-border-color: 1px solid #dee2e6;
+
+  --datatable-hr-bg: #f8f9fa;
+  --datatable-hr-color: var(--primary-text);
+  --datatable-hr-border: #dee2e6;
+
+  --datatable-td-bg: #f8f9fa;
+  --datatable-td-color: var(--primary-text);
+
+  --datatable-rows-bg: #ffffff;
+  --datatable-rows-text-color: #e3e3e3;
+  --datatable-rows-border: 1px solid #dee2e6;
+
+  // -- TEXT BOXES --
+  --textbox-bg-color: #ffffff;
+  --textbox-border: 1px solid #d5d5d5;
+  --textbox-color: #676767;
+
+  // -- BUTTON --
+  --button-text: #ffffff;
+  --button-bg: #68a453;
+
+  // -- TOGGLES --
+  --toggle-background-active: #1586d5;
+  --toggle-background-inactive: #4d4d4d;
+
+}

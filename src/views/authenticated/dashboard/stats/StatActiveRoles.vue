@@ -1,5 +1,5 @@
 <template>
-  <div class="p-col-2 p-m-2 p-text-center">
+  <div class="p-col-2 p-m-2 p-text-center dash-grid-item">
     <Knob v-model="stats.roles" :min="0" :max="20" :readonly="true"/>
     <div class="stat-text">System Roles</div>
   </div>
