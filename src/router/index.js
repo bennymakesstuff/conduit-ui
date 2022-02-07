@@ -206,7 +206,28 @@ router.afterEach((to, from, failure) => {
  */
 function checkUserLoggedIn()
 {
-  return (store.getters.getUser != null);
+  var creds = localStorage.getItem('credentials');
+
+  if (creds === null) {
+    return false;
+  }
+
+  creds = JSON.parse(creds);
+
+  if (!creds.hasOwnProperty('access_token') || !creds.hasOwnProperty('status')) {
+    return false;
+  }
+
+  if (creds.status === false) {
+    return false;
+  }
+
+  if (store.getters.getUser === null) {
+    return false;
+  }
+
+  // Success
+  return true;
 }
 
 /**
