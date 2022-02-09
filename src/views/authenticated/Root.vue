@@ -2,6 +2,14 @@
   <div class="auth-root">
     <Navigation :class="['navigation-pane', compact_navigation_class]"/>
     <div :class="['content-pane', compact_navigation_class]">
+      <div v-show="showLoader" class="loader-overlay">
+        <div class="loader-inner">
+          <div class="loader-box">
+            <div class="loader"></div>
+          </div>
+          <div v-show="showLoaderText" class="loader-text">Loading</div>
+        </div>
+      </div>
       <div class="inner-content-pane">
         <router-view></router-view>
       </div>
@@ -18,7 +26,13 @@ export default {
     Navigation,
   },
   computed: {
-    compact_navigation_class: function(){
+    showLoader: function () {
+      return this.$store.getters.getLoaderState;
+    },
+    showLoaderText: function () {
+      return this.$store.getters.getLoaderTextState;
+    },
+    compact_navigation_class: function () {
       return (this.$store.getters.getNavigationSize) ? 'compact' : '';
     }
   },
@@ -33,6 +47,36 @@ export default {
 
 $navigation_width: 10rem;
 $navigation_width_compact: 4rem;
+
+.loader-overlay {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  display: flex;
+  position: absolute;
+  z-index: 1000;
+
+  > .loader-inner {
+    min-width: 5rem;
+    min-height: 5rem;
+    background-color: transparent;
+    margin: auto;
+
+    > .loader-box {
+      height: 4rem;
+      width: 4rem;
+      background-color: transparent;
+      margin: auto;
+    }
+
+    > .loader-text {
+      font-size: 2rem;
+      color: var(--loader-color);
+      width: 100%;
+      text-align: center;
+    }
+  }
+}
 
 .auth-root {
   width: 100vw;

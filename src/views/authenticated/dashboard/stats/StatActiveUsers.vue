@@ -23,7 +23,9 @@ export default {
   },
   mounted() {
     this.getUserCount();
-    //setInterval(this.getUserCount, 10000);
+
+    // Hide the page loader
+    this.$store.dispatch('TOGGLE_LOADER', false);
   },
   methods: {
     getUserCount: async function() {

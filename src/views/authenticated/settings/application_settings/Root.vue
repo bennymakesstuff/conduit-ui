@@ -28,6 +28,8 @@ export default {
     }
   },
   mounted() {
+    // Hide the page loader
+    this.$store.dispatch('TOGGLE_LOADER', false);
   },
   methods: {
     dothing: function(){

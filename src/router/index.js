@@ -161,6 +161,9 @@ router.beforeEach((to, from, next) => {
 
   let route_color = to.meta.color ?? '#000000';
 
+  // Show Loader
+  store.dispatch('TOGGLE_LOADER', true);
+
   if (to.path !== UNAUTHENTICATED_REDIRECT_PATH) {
 
     //Check if path requires authentication

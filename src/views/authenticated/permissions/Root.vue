@@ -124,10 +124,12 @@ export default {
         }
 
         this.permissions = data.permissions;
+        this.$store.dispatch('TOGGLE_LOADER', false);
       }
       catch (error) {
         console.log('%cCould not retrieve permission sets', "color:red");
         console.log(error);
+        this.$store.dispatch('TOGGLE_LOADER', false);
       }
     }
   }

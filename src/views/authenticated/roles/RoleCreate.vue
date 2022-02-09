@@ -132,6 +132,7 @@ export default {
     // Only run these methods if in user "Edit" mode
     this.getPermissionGroups();
     this.getPermissions();
+
   },
   methods: {
     updatePermissionsStateFromLoadedData: function() {
@@ -276,10 +277,15 @@ export default {
           await this.getRoleDetails();
         }
 
+        // Hide the page loader
+        this.$store.dispatch('TOGGLE_LOADER', false);
+
       }
       catch (error) {
         console.log('%cCould not retrieve permissions', "color:red");
         console.log(error);
+        // Hide the page loader
+        this.$store.dispatch('TOGGLE_LOADER', false);
       }
     },
 

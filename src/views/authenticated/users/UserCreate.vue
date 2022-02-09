@@ -294,6 +294,8 @@ export default {
     // Only run these methods if in user "Create" mode
     if (!this.viewEdit) {
       // Actions here
+      // Hide the page loader
+      this.$store.dispatch('TOGGLE_LOADER', false);
     }
 
     // Always perform these methods
@@ -319,10 +321,14 @@ export default {
         }
 
         this.user = data.user;
+        // Hide the page loader
+        this.$store.dispatch('TOGGLE_LOADER', false);
       }
       catch (error) {
         console.log('%cCould not retrieve user', "color:red");
         console.log(error);
+        // Hide the page loader
+        this.$store.dispatch('TOGGLE_LOADER', false);
       }
     },
     saveUser: async function(create_or_update = 'create') {

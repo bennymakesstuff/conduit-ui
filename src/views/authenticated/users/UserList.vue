@@ -145,6 +145,8 @@ export default {
         }
 
         this.users = data.users;
+        // Hide the page loader
+        this.$store.dispatch('TOGGLE_LOADER', false);
       }
       catch (error) {
         console.log('%cCould not retrieve users', "color:red");
@@ -156,6 +158,8 @@ export default {
           life: 3000,
           styleClass: 'compact-toast'
         });
+        // Hide the page loader
+        this.$store.dispatch('TOGGLE_LOADER', false);
       }
     }
   }

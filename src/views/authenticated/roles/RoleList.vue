@@ -114,10 +114,14 @@ export default {
         }
 
         this.roles = data.roles;
+        // Hide the page loader
+        this.$store.dispatch('TOGGLE_LOADER', false);
       }
       catch (error) {
         console.log('%cCould not retrieve roles', "color:red");
         console.log(error);
+        // Hide the page loader
+        this.$store.dispatch('TOGGLE_LOADER', false);
       }
     }
   }
