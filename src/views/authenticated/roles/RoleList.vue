@@ -34,10 +34,10 @@
             </div>
           </template>
           <template #empty>
-            No customers found.
+            <ListEmpty label="No Roles found."/>
           </template>
           <template #loading>
-            Loading customers data. Please wait.
+            <ListEmpty label="Loading customers data. Please wait."/>
           </template>
           <Column field="active" header="Active" style="width: 1rem;text-align:center;" :sortable="true">
             <template #body="slotProps">
@@ -71,10 +71,12 @@
 <script>
 import {FilterMatchMode} from 'primevue/api';
 import {$axios as $http} from "@/axios";
+import ListEmpty from "@/components/ListEmpty.vue";
 
 export default {
   name: 'RoleList',
   components: {
+    ListEmpty
   },
   data: function() {
     return {

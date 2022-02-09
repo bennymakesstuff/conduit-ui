@@ -34,10 +34,10 @@
           </div>
         </template>
         <template #empty>
-          No customers found.
+          <ListEmpty label="No customers found."/>
         </template>
         <template #loading>
-          Loading customers data. Please wait.
+          <ListEmpty label="Loading customers data. Please wait."/>
         </template>
         <Column field="permission_group.title" header="Permission Group" :sortable="true" style="width: 10rem !important;"></Column>
 
@@ -78,11 +78,13 @@
 import CreateRole from '@/views/authenticated/roles/RoleCreate.vue';
 import {FilterMatchMode,FilterOperator} from 'primevue/api';
 import {$axios as $http} from "@/axios";
+import ListEmpty from "@/components/ListEmpty.vue";
 
 export default {
   name: 'PermissionRoot',
   components: {
-    CreateRole
+    CreateRole,
+    ListEmpty
   },
   data: function() {
     return {
