@@ -1,6 +1,6 @@
 <template>
   <div class="nav-item">
-    <div class="nav-tooltip">
+    <div class="nav-tooltip" v-if="$store.getters.getNavigationSize">
       <div class="triangle"></div>
       <div class="text">{{ title }}</div>
     </div>
