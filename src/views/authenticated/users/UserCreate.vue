@@ -23,9 +23,10 @@
           </div>
           <div class="grid-item-inner">
             <div class="profile-picture-area">
-              <div class="profile-picture" @click="checkURL">
-                <!--<input type="file" @click="upload">-->
-                <div v-if="hasProfileImage" class="profile-image"></div>
+              <div class="profile-picture">
+                <div v-if="hasProfileImage" class="profile-image">
+                  <img style="height:100%; width: 100%" :src="`http://localhost:8000/images/${user.uuid}/profile.png`">
+                </div>
                 <div v-if="!hasProfileImage" class="profile-initials">BB</div>
               </div>
               <FileUpload mode="basic" name="image" @progress="uploadStatus" chooseLabel="Upload Profile" :auto="true" :customUpload="true" @uploader="uploadProfileImage" />
@@ -322,6 +323,8 @@ export default {
       console.log(event.files[0]);
       const formData = new FormData();
       formData.append("image", event.files[0]);
+      formData.append("user", this.user.uuid);
+      console.log(this.user.uuid);
       let response = await $http.post(this.$store.state.api + 'users/profile-image', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
@@ -591,6 +594,7 @@ export default {
     height: 8rem;
     width: 8rem;
     border: 1px solid #e3e3e3;
+    overflow: hidden;
 
 
     > .profile-initials {
