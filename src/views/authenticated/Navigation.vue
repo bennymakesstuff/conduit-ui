@@ -28,10 +28,10 @@
       <NavMenuItem @click="logout_user" title="Logout" icon="I">
         <i class="pi pi-sign-out rotate-180"></i>
       </NavMenuItem>
-      <NavMenuItem @click="toggleWidth" title="" icon="I">
+      <NavMenuItem @click="toggleWidth" :title="menuSizeText" icon="I">
         <i :class="[{'rotate-180': $store.getters.getNavigationSize}, 'menu-size-toggle', 'pi', 'pi-angle-left']"></i>
       </NavMenuItem>
-      <NavMenuItem @click="toggleTheme" title="Theme" icon="I">
+      <NavMenuItem @click="toggleTheme" title="Toggle Theme" icon="I">
         T
       </NavMenuItem>
   </div>
@@ -51,6 +51,9 @@ export default {
 
   },
   computed: {
+    menuSizeText: function() {
+      return this.$store.getters.getNavigationSize ? 'Expand Menu' : 'Compact Menu';
+    },
     username: function() {
       if (this.$store.getters.getUser !== null) {
         let user = this.$store.getters.getUser;
@@ -88,7 +91,6 @@ export default {
   height: 100vh;
   background: var(--menu-bg);
   transition: width 120ms ease;
-  overflow: hidden;
   white-space: nowrap;
 
   > .logo-area {

@@ -1,5 +1,9 @@
 <template>
   <div class="nav-item">
+    <div class="nav-tooltip">
+      <div class="triangle"></div>
+      <div class="text">{{ title }}</div>
+    </div>
     <div :class="[{'narrow-menu': $store.getters.getNavigationSize},'icon']">
       <slot></slot>
     </div>
@@ -25,6 +29,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+
+.nav-item:hover > .nav-tooltip {
+  display: block;
+}
+
 .nav-item {
   width: 100%;
   height: 3.5rem;
@@ -37,10 +46,44 @@ export default {
   font-size: 0.9rem;
   margin: 0;
   text-align: left;
+  position: relative;
 
   > div {
     display: inline-block;
     vertical-align: middle;
+  }
+
+  .nav-tooltip {
+    width: auto;
+    height: 2rem;
+    padding: 0.25rem 0.5rem;
+    display: none;
+    position: absolute;
+    left: calc(100% + 1rem);
+    top: calc(50% - 0.75rem);
+    z-index: 50;
+    line-height: 1.5rem;
+    background: var(--menu-bg);
+    box-shadow: 1px 1px 3px rgba(87, 87, 87, 0.74);
+
+    > .triangle {
+      width: 1.5rem;
+      height: 1.5rem;
+      transform: rotate(-45deg);
+      background: var(--menu-bg);
+      position: absolute;
+      top: 0.25rem;
+      left: -0.75rem;
+      z-index: 49;
+      border-radius: 0.25rem;
+    }
+
+    > .text {
+      position: relative;
+      z-index: 50;
+      color: var(--navitem-text);
+      margin-left: -0.25rem;
+    }
   }
 
   > .icon.narrow-menu {

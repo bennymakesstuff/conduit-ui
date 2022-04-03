@@ -76,8 +76,8 @@
 
 <script>
 import CreateRole from '@/views/authenticated/roles/RoleCreate.vue';
-import {FilterMatchMode,FilterOperator} from 'primevue/api';
-import {$axios as $http} from "@/axios";
+import { FilterMatchMode, FilterOperator } from 'primevue/api';
+import { $axios as $http } from "@/axios";
 import ListEmpty from "@/components/ListEmpty.vue";
 
 export default {
