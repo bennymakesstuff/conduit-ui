@@ -61,7 +61,7 @@
                 <p>View</p>
               </button>
               <button v-if="checkPermission('user:update')" label="Edit" class="p-button-xs" @click="navigateTo('user-view', {userid: slotProps.data.uuid})">
-                <i class="pi pi-pencil"></i>
+                <!--<i class="pi pi-pencil"></i>-->
                 <p>Edit</p>
               </button>
             </template>
