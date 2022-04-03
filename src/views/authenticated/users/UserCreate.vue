@@ -23,10 +23,12 @@
           </div>
           <div class="grid-item-inner">
             <div class="profile-picture-area">
-              <div class="profile-picture">
+              <div class="profile-picture" @click="checkURL">
+                <!--<input type="file" @click="upload">-->
                 <div v-if="hasProfileImage" class="profile-image"></div>
                 <div v-if="!hasProfileImage" class="profile-initials">BB</div>
               </div>
+              <FileUpload mode="basic" name="image" @progress="uploadStatus" chooseLabel="Upload Profile" :auto="true" :customUpload="true" @uploader="uploadProfileImage" />
             </div>
             <div class="details-area" style="padding-right: 1rem;">
               <div>
@@ -204,7 +206,7 @@
 </template>
 
 <script>
-import {$axios as $http} from "@/axios";
+import {$axios, $axios as $http} from "@/axios";
 
 export default {
   name: 'UsersCreate',
@@ -302,11 +304,30 @@ export default {
     this.getRoles();
   },
   methods: {
+    checkURL: function() {
+      let response = $http.get('http://localhost:8000/api/v1/users/profile-image');
+      console.log(response);
+    },
     toggleEdit: function() {
       if (this.edit_mode === true) {
         this.saveUser('update');
       }
       this.edit_mode = !this.edit_mode;
+    },
+    uploadStatus: function(event) {
+      alert('File Uploading...');
+      console.log(event);
+    },
+    uploadProfileImage: async function(event) {
+      console.log(event.files[0]);
+      const formData = new FormData();
+      formData.append("image", event.files[0]);
+      let response = await $http.post(this.$store.state.api + 'users/profile-image', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      console.log(response);
     },
     loadUser: async function() {
       try {

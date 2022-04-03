@@ -33,6 +33,7 @@ import Dropdown from 'primevue/dropdown';
 import Badge from 'primevue/badge';
 import InputMask from 'primevue/inputmask';
 import Avatar from 'primevue/avatar';
+import FileUpload from "primevue/fileupload";
 import {indexOf} from "core-js/internals/array-includes";
 import {toArray} from "core-js/internals/async-iterator-iteration";
 
@@ -71,6 +72,7 @@ app.component('Dropdown', Dropdown);
 app.component('Badge', Badge);
 app.component('InputMask', InputMask);
 app.component('Avatar', Avatar);
+app.component('FileUpload', FileUpload);
 
 app.directive('tooltip', Tooltip);
 
