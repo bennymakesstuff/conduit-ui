@@ -1,10 +1,22 @@
 @import './standard.scss';
+@import './light-theme/light.scss';
+@import './dark-theme/dark.scss';
+
+@import './ui_components.scss';
+@import './theme-overrides.scss';
+
+// Font Imports
+@import url('https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900&display=swap');
 
 html, body {
   margin: 0;
   border: 0;
   overflow: hidden;
   position: fixed;
+  //font-family: 'Quicksand', sans-serif;
+  font-family: 'Cairo', sans-serif;
+  font-weight: 200;
 }
 
 .p-mw-20 {
@@ -29,5 +41,200 @@ html, body {
   80%,
   90% {
     stroke: #6986b6;
+  }
+}
+
+.p-datatable {
+  font-size: 0.7rem !important;
+  border-radius: 0.5rem;
+}
+
+.p-datatable-header {
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+.p-datatable-footer {
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+}
+
+.record-toggle {
+  border-radius: 0.15rem !important;
+}
+
+.p-inputswitch {
+  width: 2.25rem;
+  transform: translateY(0.3rem);
+}
+
+.p-inputswitch-slider {
+  border-radius: 0.15rem !important;
+  max-height: 1.25rem;
+  width: 2.25rem;
+}
+
+.p-inputswitch-slider:before {
+  background: #ffffff !important;
+  width: 0.7rem !important;
+  height: 1rem !important;
+  left: 0.15rem !important;
+  margin-top: -0.525rem !important;
+  border-radius: 0.1rem !important;
+  transition-duration: 0.2s;
+}
+.p-button-sm {
+  font-size: 0.8rem !important;
+  font-weight: 200;
+}
+
+.p-button {
+  border-radius: 0.15rem !important;
+}
+
+.p-column-filter {
+  font-size: 0.7rem;
+  padding: 0.3rem 1rem !important;
+  width: auto;
+}
+
+.p-filter-column {padding: 0 !important;}
+
+.p-divider-content {
+  background-color: var(--inner-content-pane-bg) !important;
+  color: #7c7c7c;
+}
+
+.p-button-xs {
+  font-size: 0.7rem !important;
+  padding: 0.15rem 0.5rem !important;
+  border-radius: 0.15rem;
+  background-color: var(--primary-button-color);
+  border: 0;
+  color: #ffffff;
+  text-align: center;
+
+  > p, i {
+    vertical-align: middle;
+    display: inline-block;
+  }
+  > p {
+    padding: 0.25rem;
+    padding-left: 0.25rem;
+    margin: 0;
+    cursor: pointer;
+  }
+}
+
+.p-inputtext-sm {
+  padding: 0.35rem 0.45rem !important;
+  outline: none !important;
+  width: 100%;
+  margin-bottom: 1.25rem !important;
+}
+
+.p-inputtext-sm:hover {
+  outline: none !important;
+}
+
+h1 { font-weight: 400; }
+
+// Helper Style for rotating 180
+.rotate-180 {transform: rotate(180deg);}
+
+// Restyle search bars
+.p-inputtext.p-component {
+  padding: 0.3rem 0.5rem 0.25rem 1.7rem;
+  border-radius: 0.25rem;
+}
+
+// Restyle dropdowns
+.p-dropdown, .p-dropdown-label, .p-dropdown-items-wrapper, .p-dropdown-filter {
+  font-size: 0.7rem !important;
+}
+
+.p-dropdown-filter-container > input {padding-left: 0;}
+
+.p-dropdown-filter-icon {
+  font-size: 0.8rem;
+  padding-top: 0.15rem;
+  margin-right: -0.4rem;
+}
+
+// Moves search icon in search bars
+.p-input-icon-left > i:first-of-type {
+  left: 0.4rem !important; top: 0.87rem;
+}
+
+// Remove Highlighting from fields
+.p-inputtext:enabled:focus {
+  box-shadow: none;
+}
+
+
+// Statistics Styles
+.stat-text {
+  color: #696969;
+  font-weight: 400;
+}
+
+
+// Tab Menu Styles
+.p-tabmenu .p-tabmenu-nav, .p-tabmenuitem, .p-menuitem-link {
+  background: transparent !important;
+}
+
+.p-menuitem-text {
+  font-weight: 400;
+  font-size: 0.8rem;
+}
+
+
+// Column Header Overrides
+
+// Column Icon e.g. Sort icons
+.p-sortable-column-icon {
+  font-size: 0.7rem;
+  color: #5b5b5b;
+}
+
+// Column titles
+.p-column-title {
+  font-weight: 500;
+  font-size: 0.6rem;
+  color: #5B5B5BFF;
+}
+
+.route-title {
+  margin-bottom: 0rem !important;
+  margin-top: 0.3rem;
+  line-height: 1.32rem;
+}
+
+// Label Overrides
+.p-float-label input:focus ~ label, .p-float-label input.p-filled ~ label, .p-float-label textarea:focus ~ label, .p-float-label textarea.p-filled ~ label, .p-float-label .p-inputwrapper-focus ~ label, .p-float-label .p-inputwrapper-filled ~ label {
+  top: 0.35rem;
+  font-size: 12px;
+  left: 0.5rem;
+}
+
+.p-float-label label {
+  margin-top: -1rem;
+}
+
+@mixin vertical-align($align: middle) {
+  &:before {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    vertical-align: $align;
+    // you can add font-size 0 here and restore in the children to prevent
+    // the inline-block white-space to mess the width of your elements
+    font-size: 0;
+  }
+  & > * {
+    vertical-align: $align;
+    // although you need to know the font-size, because "inherit" is 0
+    font-size: 14px;
   }
 }

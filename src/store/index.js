@@ -11,7 +11,15 @@ export default createStore({
   },
   state: {
     application_route: null,
-    compact_navigation: false,
+    api: "http://localhost:8000/api/v1/",
+    application_config: {
+      date_format: 'AU'
+    },
+    ui: {
+      compact_navigation: false,
+      show_loader: true,
+      show_loader_text: false
+    }
   },
   mutations: {
     /**
@@ -19,7 +27,7 @@ export default createStore({
      * @param state
      */
     toggle_navigation_size (state) {
-      state.compact_navigation = !state.compact_navigation
+      state.ui.compact_navigation = !state.ui.compact_navigation
     },
 
     /**
@@ -30,6 +38,10 @@ export default createStore({
     update_application_route (state, route) {
       state.application_route = route;
       sessionStorage.setItem('application_route', JSON.stringify(route));
+    },
+
+    update_loader_state (state, new_value) {
+      state.ui.show_loader = new_value
     }
   },
   actions: {
@@ -50,16 +62,34 @@ export default createStore({
      */
     UPDATE_ROUTE ({commit}, route) {
       commit('update_application_route', route);
+    },
+
+    TOGGLE_LOADER ({commit}, new_value) {
+      commit('update_loader_state', new_value);
     }
   },
   getters: {
+
     /**
      * Returns the size of the navigation menu
      * @param state
      * @returns {boolean}
      */
     getNavigationSize: state => {
-      return state.compact_navigation;
+      return state.ui.compact_navigation;
+    },
+
+    /**
+     * Returns the loader state
+     * (Shows a loader overlay over evrything except the menu)
+     * @param state
+     * @returns {boolean}
+     */
+    getLoaderState: state => {
+      return state.ui.show_loader;
+    },
+    getLoaderTextState: state => {
+      return state.ui.show_loader_text;
     }
   }
 });

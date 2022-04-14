@@ -1,11 +1,13 @@
 <template>
-  <div>
+  <div class="outer-content">
 
-      <Menubar :model="items" class="p-m-4"/>
-
-    <div class="button-group">
-      <button @click="navigateTo('user_profilesettings')">Settings</button>
-      <button @click="navigateTo('user_utilities')">Utilities</button>
+    <div v-if="$route.name===route.name" class="">
+      <div class="route-header">
+        <div class="details">
+          <h1 class="route-title">{{ user.firstname }} {{user.lastname}}</h1>
+          <p class="route-description"></p>
+        </div>
+      </div>
     </div>
 
     <router-view></router-view>
@@ -20,6 +22,11 @@ export default {
   },
   data: function() {
     return {
+      route: {
+        title: 'User',
+        name: 'user',
+        description: 'Manage Users'
+      },
       default_user: {
         username: '',
         given_name: '',
@@ -68,6 +75,8 @@ export default {
     }
   },
   mounted() {
+    // Hide the page loader
+    this.$store.dispatch('TOGGLE_LOADER', false);
   },
   methods: {
     dothing: function(){
@@ -79,6 +88,10 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/theme/main.scss';
+
+.outer-content {
+  padding: 1rem;
+}
 
 .slider-container {
   width: 20rem;

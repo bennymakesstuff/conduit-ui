@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "axios": "^0.24.0",
+    "chart.js": "^3.7.0",
     "core-js": "^3.6.5",
     "primeflex": "^2.0.0",
     "primeicons": "^5.0.0",

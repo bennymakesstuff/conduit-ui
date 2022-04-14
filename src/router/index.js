@@ -5,8 +5,12 @@ import { unwrapProxy } from '@/helper';
 
 // Import Route Files
 import { user_routes } from './user_routes.js';
+import { role_routes } from './role_routes.js';
+import { app_settings_routes } from './app_settings_routes.js';
 import store from '@/store';
 import {$axios as $http} from "@/axios";
+import {permission_routes} from "@/router/permission_routes";
+import {users_routes} from "@/router/users_routes";
 
 const UNAUTHENTICATED_REDIRECT_PATH = '/';
 const AUTHENTICATED_REDIRECT_PATH = '/account';
@@ -57,7 +61,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "core" */ '@/views/authenticated/Root.vue'),
     children: [
       {
-      path: "/user",
+      path: "/account",
       name: "user",
       component: () => import(/* webpackChunkName: "core" */ '@/views/authenticated/user/Root.vue'),
       meta: {
@@ -65,6 +69,46 @@ const routes = [
         requiresAuth: true,
       },
       children: user_routes
+    },
+    {
+      path: "/app-settings",
+      name: "app_settings",
+      component: () => import(/* webpackChunkName: "core" */ '@/views/authenticated/settings/application_settings/Root.vue'),
+      meta: {
+        color: 'green',
+        requiresAuth: true,
+      },
+      children: app_settings_routes
+    },
+    {
+      path: "/roles",
+      name: "roles",
+      component: () => import(/* webpackChunkName: "core" */ '@/views/authenticated/roles/Root.vue'),
+      meta: {
+        color: 'green',
+        requiresAuth: true,
+      },
+      children: role_routes
+    },
+      {
+        path: "/users",
+        name: "users",
+        component: () => import(/* webpackChunkName: "core" */ '@/views/authenticated/users/Root.vue'),
+        meta: {
+          color: 'green',
+          requiresAuth: true,
+        },
+        children: users_routes
+      },
+    {
+      path: "/permissions",
+      name: "permissions",
+      component: () => import(/* webpackChunkName: "core" */ '@/views/authenticated/permissions/Root.vue'),
+      meta: {
+        color: 'green',
+        requiresAuth: true,
+      },
+      children: permission_routes
     },
     {
       path: "/dashboard",
@@ -117,6 +161,9 @@ router.beforeEach((to, from, next) => {
 
   let route_color = to.meta.color ?? '#000000';
 
+  // Show Loader
+  store.dispatch('TOGGLE_LOADER', true);
+
   if (to.path !== UNAUTHENTICATED_REDIRECT_PATH) {
 
     //Check if path requires authentication
@@ -162,7 +209,28 @@ router.afterEach((to, from, failure) => {
  */
 function checkUserLoggedIn()
 {
-  return (store.getters.getUser != null);
+  var creds = localStorage.getItem('credentials');
+
+  if (creds === null) {
+    return false;
+  }
+
+  creds = JSON.parse(creds);
+
+  if (!creds.hasOwnProperty('access_token') || !creds.hasOwnProperty('status')) {
+    return false;
+  }
+
+  if (creds.status === false) {
+    return false;
+  }
+
+  if (store.getters.getUser === null) {
+    return false;
+  }
+
+  // Success
+  return true;
 }
 
 /**
